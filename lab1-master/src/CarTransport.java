@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarTransport extends Vehicles_with_platform implements StorageThings{
+public class CarTransport extends vehiclesWithPlatform implements StorageThings{
     public CarTransport(){
         direction = 0;
         nrDoors = 2;
@@ -30,13 +30,9 @@ public class CarTransport extends Vehicles_with_platform implements StorageThing
     @Override
     public void removeVehicle(){
     }
-
     @Override
-    public List getStorage(){
+    public List<?> getStorage(){
         return storage;
     }
-    @Override
-    public boolean canMoveCheck(){
-        return getPlatformPosition() == maxAngle;
-    }
+
 }

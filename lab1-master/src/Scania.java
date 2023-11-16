@@ -2,7 +2,7 @@ package src;
 
 import java.awt.*;
 
-public class Scania extends Vehicles_with_platform {
+public class Scania extends vehiclesWithPlatform {
 
     public Scania(){
         direction = 0;
@@ -20,10 +20,6 @@ public class Scania extends Vehicles_with_platform {
         return modelName;
     }
 
-    @Override
-    public boolean canMoveCheck(){
-        return getPlatformPosition() == minAngle;
-    }
 
 
 }
