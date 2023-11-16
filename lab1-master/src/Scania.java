@@ -2,7 +2,7 @@ package src;
 
 import java.awt.*;
 
-public class Scania extends vehiclesWithPlatform {
+public class Scania extends VehiclesWithPlatform {
 
     public Scania(){
         direction = 0;
@@ -16,9 +16,7 @@ public class Scania extends vehiclesWithPlatform {
         minAngle = 0;
         stopEngine();
     }
-    public String getModelName() {
-        return modelName;
-    }
+
 
 
 

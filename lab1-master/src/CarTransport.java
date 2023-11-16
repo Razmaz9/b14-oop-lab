@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarTransport extends vehiclesWithPlatform implements StorageThings{
+public class CarTransport extends VehiclesWithPlatform implements StorageThings{
     public CarTransport(){
         direction = 0;
         nrDoors = 2;
@@ -18,13 +18,13 @@ public class CarTransport extends vehiclesWithPlatform implements StorageThings{
         stopEngine();
     }
 
-    Car testSaab = new Saab95();
+
     List<Car> storage = new ArrayList<>();
 
 
     @Override
-    public void storeVehicle(){
-        storage.add(testSaab);
+    public void storeVehicle(Car vehicle){
+        storage.add(vehicle);
     }
 
     @Override

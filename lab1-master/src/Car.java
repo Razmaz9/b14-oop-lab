@@ -5,6 +5,7 @@ public abstract class Car implements Movable {
         private final String[] directions = {"N", "E", "S", "W"};
         public int nrDoors; // Number of doors on the car
         public double enginePower; // Engine power of the car
+        public double speedFactor;
         private double currentSpeed; // The current speed of the car must be public
         public Color color; // Color of the car
         public String modelName; // The car model name
@@ -26,11 +27,14 @@ public abstract class Car implements Movable {
         public String getDirection() {
             return directions[direction];
         }
-        public double getxCoordinate(){
+        public double getXCoordinate(){
             return xCoordinate;
         }
-        public double getyCoordinate(){
+        public double getYCoordinate(){
             return yCoordinate;
+        }
+        public String getModelName(){
+            return modelName;
         }
         public void setColor(Color clr){
             color = clr;
@@ -47,17 +51,11 @@ public abstract class Car implements Movable {
 
             double speed = getCurrentSpeed();
             String currentDirection = getDirection();
-            if (currentDirection.equals("N")){
-                yCoordinate = getyCoordinate() + speed;
-            }
-            else if (currentDirection.equals("S")){
-                yCoordinate = getyCoordinate() - speed;
-            }
-            else if (currentDirection.equals("E")){
-                xCoordinate = getxCoordinate() + speed;
-            }
-            else if (currentDirection.equals("W")){
-                xCoordinate = getxCoordinate() - speed;
+            switch (currentDirection) {
+                case "N" -> yCoordinate = getYCoordinate() + speed;
+                case "S" -> yCoordinate = getYCoordinate() - speed;
+                case "E" -> xCoordinate = getXCoordinate() + speed;
+                case "W" -> xCoordinate = getXCoordinate() - speed;
             }
         }
         @Override
@@ -68,17 +66,15 @@ public abstract class Car implements Movable {
         public void turnRight() {
             direction = (direction + 3 ) % 4;
         }
-        public double speedFactor(){
-            return enginePower * 0.01;
-        }
+
         public void incrementSpeed(double amount){
-            double newSpeed  = Math.min(getCurrentSpeed() + speedFactor() * amount,enginePower);
+            double newSpeed  = Math.min(getCurrentSpeed() + speedFactor * amount,enginePower);
             if (newSpeed > getCurrentSpeed()) {
                 currentSpeed = newSpeed;
             }
         }
         public void decrementSpeed(double amount){
-            double newSpeed  = Math.max(getCurrentSpeed() - speedFactor() * amount,0);
+            double newSpeed  = Math.max(getCurrentSpeed() - speedFactor * amount,0);
             if (newSpeed <= getCurrentSpeed()) {
                 currentSpeed = newSpeed;
             }
@@ -94,4 +90,5 @@ public abstract class Car implements Movable {
                 decrementSpeed(amount);
             }
         }
+
 }

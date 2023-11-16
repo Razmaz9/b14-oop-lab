@@ -26,13 +26,18 @@ public class TestsCar {
     }
 
     @Test
-    public void TurningLeft() {
+    public void speedFactor(){
+
+    }
+
+    @Test
+    public void turningLeft() {
         Saab.turnLeft();
         Assert.assertEquals("Turning left works", Saab.getDirection(), "E");
     }
 
     @Test
-    public void RotatingLeftToNorth() {
+    public void rotatingLeftToNorth() {
         Saab.turnLeft();
         Saab.turnLeft();
         Saab.turnLeft();
@@ -41,13 +46,13 @@ public class TestsCar {
     }
 
     @Test
-    public void TurningRight() {
+    public void turningRight() {
         Saab.turnRight();
         Assert.assertEquals("Turning right works", Saab.getDirection(), "W");
     }
 
     @Test
-    public void RotatingRight() {
+    public void rotatingRight() {
         Saab.turnRight();
         Saab.turnRight();
         Saab.turnRight();
@@ -56,13 +61,13 @@ public class TestsCar {
     }
 
     @Test
-    public void StartingEngine() {
+    public void startingEngine() {
         Saab.startEngine();
         assertEquals("Engine moves the car forward slowly", Saab.getCurrentSpeed(), 0.1, 3);
     }
 
     @Test
-    public void StopEngine() {
+    public void stopEngine() {
         Saab.stopEngine();
         assertEquals("Engine stop the car and any movement", Saab.getCurrentSpeed(), 0.0, 3);
 
@@ -70,12 +75,12 @@ public class TestsCar {
 
     @Test
     public void getXCoordinate() {
-        assertEquals("Getxcoordinat works", Saab.getxCoordinate(), 0, 3);
+        assertEquals("Get x coordinate works", Saab.getXCoordinate(), 0, 3);
     }
 
     @Test
     public void getYCoordinate() {
-        assertEquals("Getycoordinate works", Saab.getyCoordinate(), 0, 3);
+        assertEquals("Get y coordinate works", Saab.getYCoordinate(), 0, 3);
     }
 
     @Test
@@ -84,7 +89,7 @@ public class TestsCar {
     }
 
     @Test
-    public void ChangeColour() {
+    public void changeColour() {
         Saab.setColor(Color.blue);
         assertEquals("You can change colour", Saab.getColor(), Color.blue);
     }
@@ -95,7 +100,7 @@ public class TestsCar {
     }
 
     @Test
-    public void GasWithTurboSaab() {
+    public void gasWithTurboSaab() {
         Saab.startEngine();
         Saab.setTurboOn();
         Saab.gas(0.5);
@@ -103,50 +108,50 @@ public class TestsCar {
     }
 
     @Test
-    public void GasWithTurboOffSaab() {
+    public void gasWithTurboOffSaab() {
         Saab.startEngine();
         Saab.gas(0.5);
         assertEquals("Gas works without turbo", Saab.getCurrentSpeed(), 0.725, 5);
     }
 
     @Test
-    public void DrivingForward() {
+    public void drivingForward() {
         Saab.startEngine();
         Saab.gas(0.5);
         Saab.move();
-        assertEquals("Driving forward works", Saab.getyCoordinate(), 0.725, 5);
+        assertEquals("Driving forward works", Saab.getYCoordinate(), 0.725, 5);
     }
 
     @Test
-    public void DrivingBackwards() {
+    public void drivingBackwards() {
         Saab.startEngine();
         Saab.gas(0.5);
         Saab.turnLeft();
         Saab.turnLeft();
         Saab.move();
-        assertEquals("Driving backwords works", Saab.getyCoordinate(), -0.725, 5);
+        assertEquals("Driving backwords works", Saab.getYCoordinate(), -0.725, 5);
     }
 
     @Test
-    public void DrivingToTheRight() {
+    public void drivingToTheRight() {
         Saab.startEngine();
         Saab.gas(0.5);
         Saab.turnRight();
         Saab.move();
-        assertEquals("Driving right works", Saab.getxCoordinate(), 0.725, 5);
+        assertEquals("Driving right works", Saab.getXCoordinate(), 0.725, 5);
     }
 
     @Test
-    public void DrivingToTheLeft() {
+    public void drivingToTheLeft() {
         Saab.startEngine();
         Saab.gas(0.5);
         Saab.turnLeft();
         Saab.move();
-        assertEquals("Driving left works", Saab.getxCoordinate(), -0.725, 5);
+        assertEquals("Driving left works", Saab.getXCoordinate(), -0.725, 5);
     }
 
     @Test
-    public void BrakingWithoutTurboSaab() {
+    public void brakingWithoutTurboSaab() {
         Saab.startEngine();
         Saab.gas(0.5);
         Saab.brake(0.5);
@@ -154,7 +159,7 @@ public class TestsCar {
     }
 
     @Test
-    public void BrakingWithTurboSaab() {
+    public void brakingWithTurboSaab() {
         Saab.startEngine();
         Saab.setTurboOn();
         Saab.gas(0.5);
@@ -163,14 +168,14 @@ public class TestsCar {
     }
 
     @Test
-    public void TurningOffTheEngine() {
+    public void turningOffTheEngine() {
         Saab.startEngine();
         Saab.stopEngine();
         assertEquals("Turning off the engine works", Saab.getCurrentSpeed(), 0, 5);
     }
 
     @Test
-    public void TurningOffTheTurboSaab() {
+    public void turningOffTheTurboSaab() {
         Saab.setTurboOn();
         Saab.setTurboOff();
         Saab.gas(0.5);
@@ -178,14 +183,14 @@ public class TestsCar {
     }
 
     @Test
-    public void GasVolvo() {
+    public void gasVolvo() {
         Volvo.startEngine();
         Volvo.gas(0.5);
         assertEquals("Gas works without turbo", Volvo.getCurrentSpeed(), 0.725, 5);
     }
 
     @Test
-    public void BrakingVolvo() {
+    public void brakingVolvo() {
         Volvo.startEngine();
         Volvo.gas(0.5);
         Volvo.brake(0.5);
@@ -196,4 +201,7 @@ public class TestsCar {
     public void getModelName(){
         assertEquals("Get model name works", Volvo.getModelName(),"Volvo240");
     }
+
+
+
 }

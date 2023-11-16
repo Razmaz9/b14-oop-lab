@@ -11,23 +11,20 @@ public class Saab95 extends Car {
         enginePower = 125;
         turboOn = false;
         modelName = "Saab95";
+        speedFactor = 1.25;
         stopEngine();
     }
-    public String getModelName() {
-        return modelName;
-    }
+
 
     public void setTurboOn(){
         turboOn = true;
+        speedFactor = speedFactor * 1.3;
+
     }
     public void setTurboOff(){
         turboOn = false;
+        speedFactor = 1.25;
     }
-    @Override
-    public double speedFactor(){
-        double turbo = 1;
-        if(turboOn) turbo = 1.3;
-        return enginePower * 0.01 * turbo;
-    }
+
  }
 
