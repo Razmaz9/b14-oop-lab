@@ -4,13 +4,24 @@ import org.junit.Test;
 import org.junit.Assert;
 import java.awt.Color;
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class TestsCar {
+public class Tests {
 
     public Saab95 Saab = new Saab95();
+    public Saab95 Saab2 = new Saab95();
+    public Saab95 Saab3 = new Saab95();
     public Volvo240 Volvo = new Volvo240();
+    public Volvo240 Volvo2 = new Volvo240();
+    public Volvo240 Volvo3 = new Volvo240();
+
+
+
     public Scania Scania = new Scania();
-    public Workshop Workshop = new Workshop();
+
+    public Workshop<Car> Workshop = new Workshop<>();
+    public Workshop<Volvo240> VolvoWorkshop = new Workshop<>();
+    public Workshop<Saab95> SaabWorkshop = new Workshop<>();
 
     public CarTransport CarTransport = new CarTransport();
 
@@ -202,6 +213,97 @@ public class TestsCar {
         assertEquals("Get model name works", Volvo.getModelName(),"Volvo240");
     }
 
+
+    @Test
+    public void setPlatformAngle(){
+        Scania.setPlatformAngle(-30);
+        assertEquals("Set platform angle works", Scania.getPlatformAngle(), 0);
+    }
+
+    @Test
+    public void setPlatformAngleWhenMoving(){
+        Scania.startEngine();
+        Scania.gas(0.5);
+        Scania.setPlatformAngle(10);
+        assertEquals("Cant set platform angle restriction when moving works", Scania.getPlatformAngle(),0);
+    }
+    @Test
+    public void moveWhenPlatformDown(){
+        Scania.setPlatformAngle(20);
+        Scania.startEngine();
+        Scania.move();
+        assertEquals("Cant move when platform is lowered restriction works", Scania.getYCoordinate(), 0,5);
+    }
+
+    @Test
+    public void storeVehicleToTransport(){
+        CarTransport.storeVehicle(Volvo);
+        assertEquals("Storing vehicle works for car transport", CarTransport.storage.get(0), Volvo);
+    }
+
+    @Test
+    public void removeVehicleFromTransport(){
+        CarTransport.storeVehicle(Volvo);
+        CarTransport.storeVehicle(Volvo2);
+        CarTransport.removeVehicle();
+        CarTransport.storeVehicle(Volvo3);
+        assertEquals("Removing vehicle works for car transport", CarTransport.storage.get(1), Volvo3);
+    }
+
+    @Test
+    public void setPlatformAngleTransport(){
+        CarTransport.setPlatformAngle(30);
+        assertEquals("Set platform angle works for car transport", CarTransport.getPlatformAngle(), 1);
+    }
+
+    @Test
+    public void carMovesWithTransport(){
+        CarTransport.storeVehicle(Volvo);
+        CarTransport.setPlatformAngle(1);
+        CarTransport.startEngine();
+        CarTransport.gas(0.5);
+        CarTransport.move();
+        assertEquals("Car moving with car transport works", CarTransport.getXCoordinate(), Volvo.getXCoordinate(),5);
+
+    }
+
+    @Test
+    public void checkIfLoadable(){
+        Volvo.xCoordinate = 10;
+        CarTransport.storeVehicle(Volvo);
+        CarTransport.storeVehicle(Saab);
+        assertEquals("Only cars close enough can be loaded for car transport works", CarTransport.storage.get(0), Saab);
+    }
+
+    @Test
+    public void volvoWorkshop(){
+        VolvoWorkshop.storeVehicle(Volvo2);
+        VolvoWorkshop.removeVehicle(Volvo2);
+        VolvoWorkshop.storeVehicle(Volvo);
+        assertEquals("Volvo workshop works", VolvoWorkshop.storage.get(0),Volvo);
+    }
+
+    @Test
+    public void saabWorkshop(){
+        SaabWorkshop.storeVehicle(Saab);
+        SaabWorkshop.removeVehicle(Saab);
+        SaabWorkshop.storeVehicle(Saab2);
+        assertEquals("Saab workshop works", SaabWorkshop.storage.get(0),Saab2);
+    }
+
+    @Test
+    public void workshop(){
+        Workshop.storeVehicle(Saab);
+        Workshop.storeVehicle(Volvo);
+        Workshop.removeVehicle(Saab);
+        assertEquals("Workshop works", Workshop.storage.get(0),Volvo);
+    }
+
+    @Test
+    public void workshopSetMaxStorage(){
+        Workshop.setMaxStorage(1);
+        assertEquals("Set max storage for workshop works", Workshop.maxStorage, 1);
+    }
 
 
 }

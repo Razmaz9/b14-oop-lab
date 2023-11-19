@@ -14,10 +14,16 @@ public class Scania extends VehiclesWithPlatform {
         yCoordinate = 0;
         maxAngle = 70;
         minAngle = 0;
+        platformAngle = 0;
+        speedFactor = 1;
         stopEngine();
     }
 
 
 
-
+    @Override
+    public void move() {
+        if(platformAngle == 0)
+            super.move();
+    }
 }

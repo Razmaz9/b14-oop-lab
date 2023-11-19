@@ -1,14 +1,30 @@
+import src.Car;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Test {
-    public String[] directions = {"N", "E", "S", "W"};
-    public int direction = 3;
-    public void turnLeft() {
-        direction = (direction + 1) % 4;
-        System.out.println(directions[direction]);
+    List<Integer> storage = new ArrayList<>();
+
+    public void add(){
+        storage.add(1);
+        storage.add(2);
+        storage.add(3);
+        storage.add(4);
+        storage.add(5);
+        System.out.println(storage);
+        storage.remove(storage.size()-1);
+        System.out.println(storage);
     }
 }
+
+
 class Main {
     public static void main(String[] args) {
         Test mytest = new Test();
-        mytest.turnLeft();
+        mytest.add();
+
+
     }
 }

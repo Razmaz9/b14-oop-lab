@@ -1,21 +1,28 @@
 package src;
 import java.util.List;
 import java.util.ArrayList;
-public class Workshop implements StorageThings {
+public class Workshop<T extends Car> implements StorageThings<T> {
+
+
+    public int maxStorage = 8;
+
+    public List<T> storage = new ArrayList<>();
 
     @Override
-    public void storeVehicle(Car vehicle){
+    public void storeVehicle(T vehicle){
+        if(storage.size() < maxStorage)
+            storage.add(vehicle);
     }
-    // Overloading
 
     @Override
     public void removeVehicle(){
     }
-    // Overloading
 
-    @Override
-    public List<?> getStorage(){;
-        return null;
+    public void removeVehicle(T vehicle){
+        storage.remove(vehicle);
     }
 
+    public void setMaxStorage(int num){
+        maxStorage = num;
+    }
 }
