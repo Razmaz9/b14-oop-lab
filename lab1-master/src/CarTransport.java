@@ -5,7 +5,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarTransport extends VehiclesWithPlatform implements StorageThings{
+public class CarTransport extends Car implements StorageThings{
+
+    public List<Car> storage = new ArrayList<>();
+    boolean platformIsOpen = true;
+
     public CarTransport(){
         direction = 0;
         nrDoors = 2;
@@ -14,20 +18,17 @@ public class CarTransport extends VehiclesWithPlatform implements StorageThings{
         modelName = "Example Car Transport";
         xCoordinate = 0;
         yCoordinate = 0;
-        maxAngle = 1;
-        minAngle = 0;
-        platformAngle = 0; // 1 = Ramp is up, transport can move. 0 = Ramp is down, transport can't move.
         stopEngine();
     }
 
-    public List<Car> storage = new ArrayList<>();
 
-    @Override
-    public void setPlatformAngle(int angle) {
-        if(angle <= 0)
-            super.setPlatformAngle(0);
-        else
-            super.setPlatformAngle(1);
+
+    public void openPlatform(){
+        platformIsOpen = true;
+    }
+
+    public void closePlatform(){
+        platformIsOpen = false;
     }
 
     @Override
@@ -38,7 +39,7 @@ public class CarTransport extends VehiclesWithPlatform implements StorageThings{
                 getCurrentSpeed() == 0 &&
                 checkIfLoadable(vehicle) &&
                 storage.size() < maxStorage &&
-                getPlatformAngle() == 0)
+                platformIsOpen)
 
             storage.add(vehicle);
     }
@@ -47,7 +48,7 @@ public class CarTransport extends VehiclesWithPlatform implements StorageThings{
     public void removeVehicle(){
         int lastIndex = storage.size() -1 ;
         Car vehicle = storage.get(lastIndex);
-        if(getPlatformAngle() == 0)
+        if(platformIsOpen)
             storage.remove(lastIndex);
         vehicle.xCoordinate = getXCoordinate() - 1;
         vehicle.yCoordinate = getYCoordinate() - 1;
@@ -61,7 +62,7 @@ public class CarTransport extends VehiclesWithPlatform implements StorageThings{
 
     @Override
     public void move() {
-        if(platformAngle == 1){
+        if(!platformIsOpen){
             super.move();
             for (Car vehicle : storage) {
               vehicle.xCoordinate = getXCoordinate();

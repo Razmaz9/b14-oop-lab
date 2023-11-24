@@ -10,7 +10,6 @@ public class Tests {
 
     public Saab95 Saab = new Saab95();
     public Saab95 Saab2 = new Saab95();
-    public Saab95 Saab3 = new Saab95();
     public Volvo240 Volvo = new Volvo240();
     public Volvo240 Volvo2 = new Volvo240();
     public Volvo240 Volvo3 = new Volvo240();
@@ -251,15 +250,21 @@ public class Tests {
     }
 
     @Test
-    public void setPlatformAngleTransport(){
-        CarTransport.setPlatformAngle(30);
-        assertEquals("Set platform angle works for car transport", CarTransport.getPlatformAngle(), 1);
+    public void openCarTransportPlatform(){
+        CarTransport.openPlatform();
+        assertTrue("Set platform angle works for car transport", CarTransport.platformIsOpen);
+    }
+
+    @Test
+    public void closeCarTransportPlatform(){
+        CarTransport.closePlatform();
+        assertFalse("Set platform angle works for car transport", CarTransport.platformIsOpen);
     }
 
     @Test
     public void carMovesWithTransport(){
         CarTransport.storeVehicle(Volvo);
-        CarTransport.setPlatformAngle(1);
+        CarTransport.closePlatform();
         CarTransport.startEngine();
         CarTransport.gas(0.5);
         CarTransport.move();
