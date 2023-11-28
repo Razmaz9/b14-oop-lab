@@ -5,18 +5,11 @@ import java.awt.*;
 public class Scania extends VehiclesWithPlatform {
 
     public Scania(){
-        direction = 0;
-        nrDoors = 2;
-        color = Color.white;
-        enginePower = 300;
-        modelName = "Scania";
-        xCoordinate = 0;
-        yCoordinate = 0;
+        super(2, 300, Color.WHITE, "Scania");
         maxAngle = 70;
         minAngle = 0;
         platformAngle = 0;
         speedFactor = 1;
-        stopEngine();
     }
 
 

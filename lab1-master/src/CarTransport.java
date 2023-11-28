@@ -9,17 +9,9 @@ public class CarTransport extends Car implements StorageThings{
     public List<Car> storage = new ArrayList<>();
     boolean platformIsOpen = true;
 
-    public CarTransport(){
-        direction = 0;
-        nrDoors = 2;
-        color = Color.cyan;
-        enginePower = 400;
-        modelName = "Example Car Transport";
-        xCoordinate = 0;
-        yCoordinate = 0;
-        stopEngine();
+    public CarTransport() {
+        super(2, 400, Color.CYAN, "Example Car Transport");
     }
-
 
 
     public void openPlatform(){
