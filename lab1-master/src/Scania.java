@@ -13,7 +13,7 @@ public class Scania extends VehiclesWithPlatform {
 
     @Override
     public void move() {
-        if(platformAngle == 0)
+        if(getPlatformAngle() == 0)
             super.move();
     }
 }
