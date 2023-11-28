@@ -5,10 +5,7 @@ import java.awt.*;
 public class Scania extends VehiclesWithPlatform {
 
     public Scania(){
-        super(2, 300, Color.WHITE, "Scania");
-        maxAngle = 70;
-        minAngle = 0;
-        platformAngle = 0;
+        super(2, 300, Color.WHITE, "Scania", 0, 70);
         speedFactor = 1;
     }
 
