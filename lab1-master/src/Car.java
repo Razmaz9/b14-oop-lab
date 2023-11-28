@@ -57,50 +57,54 @@ public abstract class Car implements Movable {
         setCurrentSpeed(0);
     }
 
-        @Override
-        public void move() {
+    @Override
+    public void move() {
 
-            double speed = getCurrentSpeed();
-            String currentDirection = getDirection();
-            switch (currentDirection) {
-                case "N" -> yCoordinate = getYCoordinate() + speed;
-                case "S" -> yCoordinate = getYCoordinate() - speed;
-                case "E" -> xCoordinate = getXCoordinate() + speed;
-                case "W" -> xCoordinate = getXCoordinate() - speed;
-            }
+        double speed = getCurrentSpeed();
+        String currentDirection = getDirection();
+        switch (currentDirection) {
+            case "N" -> setYCoordinate(getYCoordinate() + speed);
+            case "S" -> setYCoordinate(getYCoordinate() - speed);
+            case "E" -> setXCoordinate(getXCoordinate() + speed);
+            case "W" -> setXCoordinate(getXCoordinate() - speed);
         }
-        @Override
-        public void turnLeft() {
-            direction = (direction + 1) % 4;
-        }
-        @Override
-        public void turnRight() {
-            direction = (direction + 3 ) % 4;
-        }
+    }
 
-        public void incrementSpeed(double amount){
-            double newSpeed  = Math.min(getCurrentSpeed() + speedFactor * amount,enginePower);
-            if (newSpeed > getCurrentSpeed()) {
-                currentSpeed = newSpeed;
-            }
-        }
-        public void decrementSpeed(double amount){
-            double newSpeed  = Math.max(getCurrentSpeed() - speedFactor * amount,0);
-            if (newSpeed <= getCurrentSpeed()) {
-                currentSpeed = newSpeed;
-            }
-        }
+    @Override
+    public void turnLeft() {
+        setDirection((direction + 1) % 4);
+    }
 
-        public void gas(double amount){
-            if (amount > 0 && amount < 1){
-                incrementSpeed(amount);
-            }
+    @Override
+    public void turnRight() {
+        setDirection((direction + 3) % 4);
+    }
+
+    public void incrementSpeed(double amount) {
+        double newSpeed = Math.min(getCurrentSpeed() + getSpeedFactor() * amount, getEnginePower());
+        if (newSpeed > getCurrentSpeed()) {
+            setCurrentSpeed(newSpeed);
         }
-        public void brake(double amount){
-            if (amount > 0 && amount < 1){
-                decrementSpeed(amount);
-            }
+    }
+
+    public void decrementSpeed(double amount) {
+        double newSpeed = Math.max(getCurrentSpeed() - getSpeedFactor() * amount, 0);
+        if (newSpeed <= getCurrentSpeed()) {
+            setCurrentSpeed(newSpeed);
         }
+    }
+
+    public void gas(double amount) {
+        if (amount > 0 && amount < 1) {
+            incrementSpeed(amount);
+        }
+    }
+
+    public void brake(double amount) {
+        if (amount > 0 && amount < 1) {
+            decrementSpeed(amount);
+        }
+    }
 
     public double getSpeedFactor() {
         return speedFactor;
