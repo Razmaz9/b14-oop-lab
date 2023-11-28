@@ -274,7 +274,7 @@ public class Tests {
 
     @Test
     public void checkIfLoadable(){
-        Volvo.xCoordinate = 10;
+        Volvo.setXCoordinate(10);
         CarTransport.storeVehicle(Volvo);
         CarTransport.storeVehicle(Saab);
         assertEquals("Only cars close enough can be loaded for car transport works", CarTransport.storage.get(0), Saab);

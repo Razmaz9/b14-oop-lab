@@ -41,8 +41,8 @@ public class CarTransport extends Car implements StorageThings{
         Car vehicle = storage.get(lastIndex);
         if(platformIsOpen)
             storage.remove(lastIndex);
-        vehicle.xCoordinate = getXCoordinate() - 1;
-        vehicle.yCoordinate = getYCoordinate() - 1;
+        vehicle.setXCoordinate(getXCoordinate() - 1);
+        vehicle.setYCoordinate(getYCoordinate() - 1);
     }
 
     private boolean checkIfLoadable(Car vehicle){
@@ -56,8 +56,8 @@ public class CarTransport extends Car implements StorageThings{
         if(!platformIsOpen){
             super.move();
             for (Car vehicle : storage) {
-              vehicle.xCoordinate = getXCoordinate();
-              vehicle.yCoordinate = getYCoordinate();
+              vehicle.setXCoordinate(getXCoordinate());
+              vehicle.setYCoordinate(getYCoordinate());
             }
         }
     }
