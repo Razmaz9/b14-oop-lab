@@ -4,7 +4,8 @@ import java.util.ArrayList;
 public class Workshop<T extends Car> implements StorageThings<T> {
 
 
-    public int maxStorage = 8;
+
+    private int maxStorage = 8;
 
     public List<T> storage = new ArrayList<>();
 
@@ -20,6 +21,9 @@ public class Workshop<T extends Car> implements StorageThings<T> {
 
     public void removeVehicle(T vehicle){
         storage.remove(vehicle);
+    }
+    public int getMaxStorage() {
+        return maxStorage;
     }
 
     public void setMaxStorage(int num){

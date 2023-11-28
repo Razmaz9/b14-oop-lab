@@ -307,7 +307,7 @@ public class Tests {
     @Test
     public void workshopSetMaxStorage(){
         Workshop.setMaxStorage(1);
-        assertEquals("Set max storage for workshop works", Workshop.maxStorage, 1);
+        assertEquals("Set max storage for workshop works", Workshop.getMaxStorage(), 1);
     }
 
 
