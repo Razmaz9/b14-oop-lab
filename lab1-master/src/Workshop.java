@@ -10,7 +10,7 @@ public class Workshop<T extends Car> implements RAStorage<T> {
     public List<T> storage = new ArrayList<>();
 
     @Override
-    public void storeVehicle(T vehicle){
+    public void storeItem(T vehicle){
         if(storage.size() < maxStorage)
             storage.add(vehicle);
     }
