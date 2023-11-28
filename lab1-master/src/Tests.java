@@ -232,16 +232,16 @@ public class Tests {
 
     @Test
     public void storeVehicleToTransport(){
-        CarTransport.storeVehicle(Volvo);
+        CarTransport.storeItem(Volvo);
         assertEquals("Storing vehicle works for car transport", CarTransport.getStorage().get(0), Volvo);
     }
 
     @Test
     public void removeVehicleFromTransport(){
-        CarTransport.storeVehicle(Volvo);
-        CarTransport.storeVehicle(Volvo2);
-        CarTransport.removeVehicle();
-        CarTransport.storeVehicle(Volvo3);
+        CarTransport.storeItem(Volvo);
+        CarTransport.storeItem(Volvo2);
+        CarTransport.removeLastItem();
+        CarTransport.storeItem(Volvo3);
         assertEquals("Removing vehicle works for car transport", CarTransport.getStorage().get(1), Volvo3);
     }
 
@@ -259,7 +259,7 @@ public class Tests {
 
     @Test
     public void carMovesWithTransport(){
-        CarTransport.storeVehicle(Volvo);
+        CarTransport.storeItem(Volvo);
         CarTransport.closePlatform();
         CarTransport.startEngine();
         CarTransport.gas(0.5);
@@ -271,32 +271,32 @@ public class Tests {
     @Test
     public void checkIfLoadable(){
         Volvo.setXCoordinate(10);
-        CarTransport.storeVehicle(Volvo);
-        CarTransport.storeVehicle(Saab);
+        CarTransport.storeItem(Volvo);
+        CarTransport.storeItem(Saab);
         assertEquals("Only cars close enough can be loaded for car transport works", CarTransport.getStorage().get(0), Saab);
     }
 
     @Test
     public void volvoWorkshop(){
-        VolvoWorkshop.storeVehicle(Volvo2);
-        VolvoWorkshop.removeVehicle(Volvo2);
-        VolvoWorkshop.storeVehicle(Volvo);
+        VolvoWorkshop.storeItem(Volvo2);
+        VolvoWorkshop.removeItem(Volvo2);
+        VolvoWorkshop.storeItem(Volvo);
         assertEquals("Volvo workshop works", VolvoWorkshop.storage.get(0),Volvo);
     }
 
     @Test
     public void saabWorkshop(){
-        SaabWorkshop.storeVehicle(Saab);
-        SaabWorkshop.removeVehicle(Saab);
-        SaabWorkshop.storeVehicle(Saab2);
+        SaabWorkshop.storeItem(Saab);
+        SaabWorkshop.removeItem(Saab);
+        SaabWorkshop.storeItem(Saab2);
         assertEquals("Saab workshop works", SaabWorkshop.storage.get(0),Saab2);
     }
 
     @Test
     public void workshop(){
-        Workshop.storeVehicle(Saab);
-        Workshop.storeVehicle(Volvo);
-        Workshop.removeVehicle(Saab);
+        Workshop.storeItem(Saab);
+        Workshop.storeItem(Volvo);
+        Workshop.removeItem(Saab);
         assertEquals("Workshop works", Workshop.storage.get(0),Volvo);
     }
 
