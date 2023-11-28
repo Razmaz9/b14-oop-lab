@@ -62,6 +62,11 @@ public class CarTransport extends Car implements StorageThings{
         }
     }
 
+    @Override
+    protected double calculateSpeedFactor() {
+        return 1;
+    }
+
     public List<Car> getStorage() {
         return storage;
     }
