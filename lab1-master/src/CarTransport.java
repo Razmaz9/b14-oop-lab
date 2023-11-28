@@ -1,60 +1,61 @@
 package src;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarTransport extends Car implements StorageThings{
+public class CarTransport extends Car implements LIFOStorage<Car> {
 
-    public List<Car> storage = new ArrayList<>();
-    boolean platformIsOpen = true;
+    private final List<Car> storage = new ArrayList<>();
+    private boolean platformIsOpen = true;
+    private int maxStorage;
 
-    public CarTransport(){
-        direction = 0;
-        nrDoors = 2;
-        color = Color.cyan;
-        enginePower = 400;
-        modelName = "Example Car Transport";
-        xCoordinate = 0;
-        yCoordinate = 0;
-        stopEngine();
+    public CarTransport() {
+        super(2, 400, Color.CYAN, "Example Car Transport");
+        setMaxStorage(8);
     }
 
 
-
-    public void openPlatform(){
+    public void openPlatform() {
         platformIsOpen = true;
     }
 
-    public void closePlatform(){
+    public void closePlatform() {
         platformIsOpen = false;
     }
 
     @Override
-    public void storeVehicle(Car vehicle){
-        int maxStorage = 4;
-        if(
-                !(vehicle instanceof VehiclesWithPlatform) && // Trucks and Car transport are too large to be loaded !
+    public void storeItem(Car vehicle) {
+        if (
                 getCurrentSpeed() == 0 &&
-                checkIfLoadable(vehicle) &&
-                storage.size() < maxStorage &&
-                platformIsOpen)
+                        checkIfLoadable(vehicle) &&
+                        getStorage().size() < getMaxStorage() &&
+                        isPlatformOpen())
 
-            storage.add(vehicle);
+            getStorage().add(vehicle);
     }
 
     @Override
-    public void removeVehicle(){
-        int lastIndex = storage.size() -1 ;
-        Car vehicle = storage.get(lastIndex);
-        if(platformIsOpen)
-            storage.remove(lastIndex);
-        vehicle.xCoordinate = getXCoordinate() - 1;
-        vehicle.yCoordinate = getYCoordinate() - 1;
+    public int getMaxStorage() {
+        return maxStorage;
     }
 
-    private boolean checkIfLoadable(Car vehicle){
+    @Override
+    public void setMaxStorage(int num) {
+        maxStorage = num;
+    }
+
+    @Override
+    public void removeLastItem() {
+        int lastIndex = getStorage().size() - 1;
+        Car vehicle = getStorage().get(lastIndex);
+        if (isPlatformOpen())
+            getStorage().remove(lastIndex);
+        vehicle.setXCoordinate(getXCoordinate() - 1);
+        vehicle.setYCoordinate(getYCoordinate() - 1);
+    }
+
+    private boolean checkIfLoadable(Car vehicle) {
         double xDifferential = getXCoordinate() - vehicle.getXCoordinate();
         double yDifferential = getYCoordinate() - vehicle.getYCoordinate();
         return Math.abs(xDifferential) < 1 && Math.abs(yDifferential) < 1;  // If car is 1 coordinate unit away from car transport, return true, else false.
@@ -62,13 +63,25 @@ public class CarTransport extends Car implements StorageThings{
 
     @Override
     public void move() {
-        if(!platformIsOpen){
+        if (!isPlatformOpen()) {
             super.move();
-            for (Car vehicle : storage) {
-              vehicle.xCoordinate = getXCoordinate();
-              vehicle.yCoordinate = getYCoordinate();
+            for (Car vehicle : getStorage()) {
+                vehicle.setXCoordinate(getXCoordinate());
+                vehicle.setYCoordinate(getYCoordinate());
             }
         }
     }
 
+    @Override
+    protected double calculateSpeedFactor() {
+        return 1;
+    }
+
+    public List<Car> getStorage() {
+        return storage;
+    }
+
+    public boolean isPlatformOpen() {
+        return platformIsOpen;
+    }
 }

@@ -1,24 +1,39 @@
 package src;
 
-public abstract class VehiclesWithPlatform extends Car implements Movable {
+import java.awt.*;
 
-    public int platformAngle;
-    public int maxAngle;
-    public int minAngle;
+public abstract class VehiclesWithPlatform extends Vehicle {
+
+    private final int maxAngle;
+    private final int minAngle;
+    private int platformAngle;
+
+    protected VehiclesWithPlatform(int nrDoors, double enginePower, Color color, String modelName, int minAngle, int maxAngle) {
+        super(nrDoors, enginePower, color, modelName);
+        this.minAngle = minAngle;
+        this.maxAngle = maxAngle;
+        setPlatformAngle(minAngle);
+    }
 
 
-    public int getPlatformAngle(){
+    public int getPlatformAngle() {
         return platformAngle;
     }
 
     public void setPlatformAngle(int angle) {
         if (getCurrentSpeed() == 0) {
-            if (angle <= minAngle) {
-                platformAngle = minAngle;
+            if (angle <= getMinAngle()) {
+                platformAngle = getMinAngle();
             } else
-                platformAngle = Math.min(angle, maxAngle);
+                platformAngle = Math.min(angle, getMaxAngle());
         }
     }
 
-}
+    public int getMaxAngle() {
+        return maxAngle;
+    }
 
+    public int getMinAngle() {
+        return minAngle;
+    }
+}

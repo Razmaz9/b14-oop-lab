@@ -1,10 +1,11 @@
 package src;
 
-import org.junit.Test;
 import org.junit.Assert;
-import java.awt.Color;
+import org.junit.Test;
+
+import java.awt.*;
+
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class Tests {
 
@@ -13,7 +14,6 @@ public class Tests {
     public Volvo240 Volvo = new Volvo240();
     public Volvo240 Volvo2 = new Volvo240();
     public Volvo240 Volvo3 = new Volvo240();
-
 
 
     public Scania Scania = new Scania();
@@ -35,10 +35,6 @@ public class Tests {
         Assert.assertEquals("Get direction works", Saab.getDirection(), "N");
     }
 
-    @Test
-    public void speedFactor(){
-
-    }
 
     @Test
     public void turningLeft() {
@@ -208,106 +204,107 @@ public class Tests {
     }
 
     @Test
-    public void getModelName(){
-        assertEquals("Get model name works", Volvo.getModelName(),"Volvo240");
+    public void getModelName() {
+        assertEquals("Get model name works", Volvo.getModelName(), "Volvo240");
     }
 
 
     @Test
-    public void setPlatformAngle(){
+    public void setPlatformAngle() {
         Scania.setPlatformAngle(-30);
         assertEquals("Set platform angle works", Scania.getPlatformAngle(), 0);
     }
 
     @Test
-    public void setPlatformAngleWhenMoving(){
+    public void setPlatformAngleWhenMoving() {
         Scania.startEngine();
         Scania.gas(0.5);
         Scania.setPlatformAngle(10);
-        assertEquals("Cant set platform angle restriction when moving works", Scania.getPlatformAngle(),0);
+        assertEquals("Cant set platform angle restriction when moving works", Scania.getPlatformAngle(), 0);
     }
+
     @Test
-    public void moveWhenPlatformDown(){
+    public void moveWhenPlatformDown() {
         Scania.setPlatformAngle(20);
         Scania.startEngine();
         Scania.move();
-        assertEquals("Cant move when platform is lowered restriction works", Scania.getYCoordinate(), 0,5);
+        assertEquals("Cant move when platform is lowered restriction works", Scania.getYCoordinate(), 0, 5);
     }
 
     @Test
-    public void storeVehicleToTransport(){
-        CarTransport.storeVehicle(Volvo);
-        assertEquals("Storing vehicle works for car transport", CarTransport.storage.get(0), Volvo);
+    public void storeVehicleToTransport() {
+        CarTransport.storeItem(Volvo);
+        assertEquals("Storing vehicle works for car transport", CarTransport.getStorage().get(0), Volvo);
     }
 
     @Test
-    public void removeVehicleFromTransport(){
-        CarTransport.storeVehicle(Volvo);
-        CarTransport.storeVehicle(Volvo2);
-        CarTransport.removeVehicle();
-        CarTransport.storeVehicle(Volvo3);
-        assertEquals("Removing vehicle works for car transport", CarTransport.storage.get(1), Volvo3);
+    public void removeVehicleFromTransport() {
+        CarTransport.storeItem(Volvo);
+        CarTransport.storeItem(Volvo2);
+        CarTransport.removeLastItem();
+        CarTransport.storeItem(Volvo3);
+        assertEquals("Removing vehicle works for car transport", CarTransport.getStorage().get(1), Volvo3);
     }
 
     @Test
-    public void openCarTransportPlatform(){
+    public void openCarTransportPlatform() {
         CarTransport.openPlatform();
-        assertTrue("Set platform angle works for car transport", CarTransport.platformIsOpen);
+        assertTrue("Set platform angle works for car transport", CarTransport.isPlatformOpen());
     }
 
     @Test
-    public void closeCarTransportPlatform(){
+    public void closeCarTransportPlatform() {
         CarTransport.closePlatform();
-        assertFalse("Set platform angle works for car transport", CarTransport.platformIsOpen);
+        assertFalse("Set platform angle works for car transport", CarTransport.isPlatformOpen());
     }
 
     @Test
-    public void carMovesWithTransport(){
-        CarTransport.storeVehicle(Volvo);
+    public void carMovesWithTransport() {
+        CarTransport.storeItem(Volvo);
         CarTransport.closePlatform();
         CarTransport.startEngine();
         CarTransport.gas(0.5);
         CarTransport.move();
-        assertEquals("Car moving with car transport works", CarTransport.getXCoordinate(), Volvo.getXCoordinate(),5);
+        assertEquals("Car moving with car transport works", CarTransport.getXCoordinate(), Volvo.getXCoordinate(), 5);
 
     }
 
     @Test
-    public void checkIfLoadable(){
-        Volvo.xCoordinate = 10;
-        CarTransport.storeVehicle(Volvo);
-        CarTransport.storeVehicle(Saab);
-        assertEquals("Only cars close enough can be loaded for car transport works", CarTransport.storage.get(0), Saab);
+    public void checkIfLoadable() {
+        Volvo.setXCoordinate(10);
+        CarTransport.storeItem(Volvo);
+        CarTransport.storeItem(Saab);
+        assertEquals("Only cars close enough can be loaded for car transport works", CarTransport.getStorage().get(0), Saab);
     }
 
     @Test
-    public void volvoWorkshop(){
-        VolvoWorkshop.storeVehicle(Volvo2);
-        VolvoWorkshop.removeVehicle(Volvo2);
-        VolvoWorkshop.storeVehicle(Volvo);
-        assertEquals("Volvo workshop works", VolvoWorkshop.storage.get(0),Volvo);
+    public void volvoWorkshop() {
+        VolvoWorkshop.storeItem(Volvo2);
+        VolvoWorkshop.removeItem(Volvo2);
+        VolvoWorkshop.storeItem(Volvo);
+        assertEquals("Volvo workshop works", VolvoWorkshop.storage.get(0), Volvo);
     }
 
     @Test
-    public void saabWorkshop(){
-        SaabWorkshop.storeVehicle(Saab);
-        SaabWorkshop.removeVehicle(Saab);
-        SaabWorkshop.storeVehicle(Saab2);
-        assertEquals("Saab workshop works", SaabWorkshop.storage.get(0),Saab2);
+    public void saabWorkshop() {
+        SaabWorkshop.storeItem(Saab);
+        SaabWorkshop.removeItem(Saab);
+        SaabWorkshop.storeItem(Saab2);
+        assertEquals("Saab workshop works", SaabWorkshop.storage.get(0), Saab2);
     }
 
     @Test
-    public void workshop(){
-        Workshop.storeVehicle(Saab);
-        Workshop.storeVehicle(Volvo);
-        Workshop.removeVehicle(Saab);
-        assertEquals("Workshop works", Workshop.storage.get(0),Volvo);
+    public void workshop() {
+        Workshop.storeItem(Saab);
+        Workshop.storeItem(Volvo);
+        Workshop.removeItem(Saab);
+        assertEquals("Workshop works", Workshop.storage.get(0), Volvo);
     }
 
     @Test
-    public void workshopSetMaxStorage(){
+    public void workshopSetMaxStorage() {
         Workshop.setMaxStorage(1);
-        assertEquals("Set max storage for workshop works", Workshop.maxStorage, 1);
+        assertEquals("Set max storage for workshop works", Workshop.getMaxStorage(), 1);
     }
 
 
