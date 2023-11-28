@@ -13,7 +13,7 @@ public abstract class Vehicle implements Movable {
     private double xCoordinate; // The x coordinate of the car
     private double yCoordinate; // The Y coordinate of the car
 
-    public Vehicle(int nrDoors, double enginePower, Color color, String modelName) {
+    protected Vehicle(int nrDoors, double enginePower, Color color, String modelName) {
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
         this.modelName = modelName;
