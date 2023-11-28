@@ -13,6 +13,18 @@ public abstract class Car implements Movable {
     private String modelName; // The car model name
     private double xCoordinate; // The x coordinate of the car
     private double yCoordinate; // The Y coordinate of the car
+
+    public Car(int nrDoors, double enginePower, Color color, String modelName) {
+        this.nrDoors = nrDoors;
+        this.enginePower = enginePower;
+        this.modelName = modelName;
+        setColor(color);
+        setDirection(0);
+        setXCoordinate(0);
+        setYCoordinate(0);
+        stopEngine();
+    }
+
     public int getNrDoors() {
         return nrDoors;
     }
