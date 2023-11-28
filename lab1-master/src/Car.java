@@ -7,7 +7,6 @@ public abstract class Car implements Movable {
     private int direction; // The direction that the car is facing
     private int nrDoors; // Number of doors on the car
     private double enginePower; // Engine power of the car
-    private double speedFactor;
     private double currentSpeed; // The current speed of the car must be public
     private Color color; // Color of the car
     private String modelName; // The car model name
@@ -118,10 +117,6 @@ public abstract class Car implements Movable {
         if (amount > 0 && amount < 1) {
             decrementSpeed(amount);
         }
-    }
-
-    public double getSpeedFactor() {
-        return speedFactor;
     }
 
     public void setDirection(int direction) {
