@@ -5,8 +5,8 @@ import java.awt.*;
 public abstract class VehiclesWithPlatform extends Vehicle implements Movable {
 
     private int platformAngle;
-    private int maxAngle;
-    private int minAngle;
+    private final int maxAngle;
+    private final int minAngle;
 
     public VehiclesWithPlatform(int nrDoors, double enginePower, Color color, String modelName, int minAngle, int maxAngle) {
         super(nrDoors, enginePower, color, modelName);

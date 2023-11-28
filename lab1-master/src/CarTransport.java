@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CarTransport extends Car implements LIFOStorage<Car> {
 
-    private List<Car> storage = new ArrayList<>();
+    private final List<Car> storage = new ArrayList<>();
     private boolean platformIsOpen = true;
     private int maxStorage;
 
