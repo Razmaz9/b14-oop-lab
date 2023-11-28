@@ -6,8 +6,8 @@ import java.util.List;
 
 public class CarTransport extends Car implements StorageThings{
 
-    public List<Car> storage = new ArrayList<>();
-    boolean platformIsOpen = true;
+    private List<Car> storage = new ArrayList<>();
+    private boolean platformIsOpen = true;
 
     public CarTransport() {
         super(2, 400, Color.CYAN, "Example Car Transport");
@@ -29,18 +29,18 @@ public class CarTransport extends Car implements StorageThings{
                 !(vehicle instanceof VehiclesWithPlatform) && // Trucks and Car transport are too large to be loaded !
                 getCurrentSpeed() == 0 &&
                 checkIfLoadable(vehicle) &&
-                storage.size() < maxStorage &&
-                platformIsOpen)
+                getStorage().size() < maxStorage &&
+                        isPlatformOpen())
 
-            storage.add(vehicle);
+            getStorage().add(vehicle);
     }
 
     @Override
     public void removeVehicle(){
-        int lastIndex = storage.size() -1 ;
-        Car vehicle = storage.get(lastIndex);
-        if(platformIsOpen)
-            storage.remove(lastIndex);
+        int lastIndex = getStorage().size() -1 ;
+        Car vehicle = getStorage().get(lastIndex);
+        if(isPlatformOpen())
+            getStorage().remove(lastIndex);
         vehicle.setXCoordinate(getXCoordinate() - 1);
         vehicle.setYCoordinate(getYCoordinate() - 1);
     }
@@ -53,13 +53,20 @@ public class CarTransport extends Car implements StorageThings{
 
     @Override
     public void move() {
-        if(!platformIsOpen){
+        if(!isPlatformOpen()){
             super.move();
-            for (Car vehicle : storage) {
+            for (Car vehicle : getStorage()) {
               vehicle.setXCoordinate(getXCoordinate());
               vehicle.setYCoordinate(getYCoordinate());
             }
         }
     }
 
+    public List<Car> getStorage() {
+        return storage;
+    }
+
+    public boolean isPlatformOpen() {
+        return platformIsOpen;
+    }
 }

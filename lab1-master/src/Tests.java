@@ -237,7 +237,7 @@ public class Tests {
     @Test
     public void storeVehicleToTransport(){
         CarTransport.storeVehicle(Volvo);
-        assertEquals("Storing vehicle works for car transport", CarTransport.storage.get(0), Volvo);
+        assertEquals("Storing vehicle works for car transport", CarTransport.getStorage().get(0), Volvo);
     }
 
     @Test
@@ -246,19 +246,19 @@ public class Tests {
         CarTransport.storeVehicle(Volvo2);
         CarTransport.removeVehicle();
         CarTransport.storeVehicle(Volvo3);
-        assertEquals("Removing vehicle works for car transport", CarTransport.storage.get(1), Volvo3);
+        assertEquals("Removing vehicle works for car transport", CarTransport.getStorage().get(1), Volvo3);
     }
 
     @Test
     public void openCarTransportPlatform(){
         CarTransport.openPlatform();
-        assertTrue("Set platform angle works for car transport", CarTransport.platformIsOpen);
+        assertTrue("Set platform angle works for car transport", CarTransport.isPlatformOpen());
     }
 
     @Test
     public void closeCarTransportPlatform(){
         CarTransport.closePlatform();
-        assertFalse("Set platform angle works for car transport", CarTransport.platformIsOpen);
+        assertFalse("Set platform angle works for car transport", CarTransport.isPlatformOpen());
     }
 
     @Test
@@ -277,7 +277,7 @@ public class Tests {
         Volvo.setXCoordinate(10);
         CarTransport.storeVehicle(Volvo);
         CarTransport.storeVehicle(Saab);
-        assertEquals("Only cars close enough can be loaded for car transport works", CarTransport.storage.get(0), Saab);
+        assertEquals("Only cars close enough can be loaded for car transport works", CarTransport.getStorage().get(0), Saab);
     }
 
     @Test
