@@ -8,8 +8,11 @@ public abstract class VehiclesWithPlatform extends Car implements Movable {
     private int maxAngle;
     private int minAngle;
 
-    public VehiclesWithPlatform(int nrDoors, double enginePower, Color color, String modelName) {
+    public VehiclesWithPlatform(int nrDoors, double enginePower, Color color, String modelName, int minAngle, int maxAngle) {
         super(nrDoors, enginePower, color, modelName);
+        this.minAngle = minAngle;
+        this.maxAngle = maxAngle;
+        setPlatformAngle(minAngle);
     }
 
 
