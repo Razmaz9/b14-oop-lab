@@ -1,7 +1,7 @@
 package src;
 import java.util.List;
 import java.util.ArrayList;
-public class Workshop<T extends Car> implements StorageThings<T> {
+public class Workshop<T extends Car> implements RAStorage<T> {
 
 
 
@@ -16,16 +16,16 @@ public class Workshop<T extends Car> implements StorageThings<T> {
     }
 
     @Override
-    public void removeVehicle(){
+    public void removeItem(T car){
+        storage.remove(car);
     }
 
-    public void removeVehicle(T vehicle){
-        storage.remove(vehicle);
-    }
+    @Override
     public int getMaxStorage() {
         return maxStorage;
     }
 
+    @Override
     public void setMaxStorage(int num){
         maxStorage = num;
     }
