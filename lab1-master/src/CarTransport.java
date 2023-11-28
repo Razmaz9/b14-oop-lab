@@ -27,7 +27,7 @@ public class CarTransport extends Car implements LIFOStorage<Car> {
     @Override
     public void storeItem(Car vehicle) {
         if (
-                        getCurrentSpeed() == 0 &&
+                getCurrentSpeed() == 0 &&
                         checkIfLoadable(vehicle) &&
                         getStorage().size() < getMaxStorage() &&
                         isPlatformOpen())

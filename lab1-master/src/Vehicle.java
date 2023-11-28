@@ -36,6 +36,10 @@ public abstract class Vehicle implements Movable {
         return currentSpeed;
     }
 
+    public void setCurrentSpeed(double currentSpeed) {
+        this.currentSpeed = currentSpeed;
+    }
+
     public Color getColor() {
         return color;
     }
@@ -48,12 +52,24 @@ public abstract class Vehicle implements Movable {
         return directions[direction];
     }
 
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
     public double getXCoordinate() {
         return xCoordinate;
     }
 
+    public void setXCoordinate(double xCoordinate) {
+        this.xCoordinate = xCoordinate;
+    }
+
     public double getYCoordinate() {
         return yCoordinate;
+    }
+
+    public void setYCoordinate(double yCoordinate) {
+        this.yCoordinate = yCoordinate;
     }
 
     public String getModelName() {
@@ -117,21 +133,5 @@ public abstract class Vehicle implements Movable {
         if (amount > 0 && amount < 1) {
             decrementSpeed(amount);
         }
-    }
-
-    public void setDirection(int direction) {
-        this.direction = direction;
-    }
-
-    public void setCurrentSpeed(double currentSpeed) {
-        this.currentSpeed = currentSpeed;
-    }
-
-    public void setXCoordinate(double xCoordinate) {
-        this.xCoordinate = xCoordinate;
-    }
-
-    public void setYCoordinate(double yCoordinate) {
-        this.yCoordinate = yCoordinate;
     }
 }

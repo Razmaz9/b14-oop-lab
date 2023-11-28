@@ -4,9 +4,9 @@ import java.awt.*;
 
 public abstract class VehiclesWithPlatform extends Vehicle {
 
-    private int platformAngle;
     private final int maxAngle;
     private final int minAngle;
+    private int platformAngle;
 
     protected VehiclesWithPlatform(int nrDoors, double enginePower, Color color, String modelName, int minAngle, int maxAngle) {
         super(nrDoors, enginePower, color, modelName);
@@ -16,7 +16,7 @@ public abstract class VehiclesWithPlatform extends Vehicle {
     }
 
 
-    public int getPlatformAngle(){
+    public int getPlatformAngle() {
         return platformAngle;
     }
 
