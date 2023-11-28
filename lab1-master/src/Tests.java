@@ -35,10 +35,6 @@ public class Tests {
         Assert.assertEquals("Get direction works", Saab.getDirection(), "N");
     }
 
-    @Test
-    public void speedFactor(){
-
-    }
 
     @Test
     public void turningLeft() {
