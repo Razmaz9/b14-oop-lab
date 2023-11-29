@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarTransport extends Car implements LIFOStorage<Car> {
+public class CarTransport extends Vehicle implements LIFOStorage<Car> {
 
     private final List<Car> storage = new ArrayList<>();
     private boolean platformIsOpen = true;
