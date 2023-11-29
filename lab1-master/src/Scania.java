@@ -10,9 +10,9 @@ public class Scania extends VehiclesWithPlatform {
 
 
     @Override
-    public void move() {
+    public void gas(double amount) {
         if (getPlatformAngle() == 0)
-            super.move();
+            super.gas(amount);
     }
 
     @Override
