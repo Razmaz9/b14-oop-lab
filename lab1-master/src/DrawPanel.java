@@ -19,7 +19,7 @@ public class DrawPanel extends JPanel{
     Point volvoPoint = new Point();
     Point saabPoint = new Point();
     Point scaniaPoint = new Point();
-    ArrayList<Point> points = new ArrayList<>();
+    private final ArrayList<Point> points = new ArrayList<>();
     private int carPointIndex;
 
 
