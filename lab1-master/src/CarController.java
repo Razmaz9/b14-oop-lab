@@ -14,14 +14,6 @@ import java.util.ArrayList;
 public class CarController {
     // member fields:
 
-    //<editor-fold desc="Timer: does not belong in Controller">
-    // The delay (ms) corresponds to 20 updates a sec (hz)
-    private final int delay = 50;
-    // The timer is started with an listener (see below) that executes the statements
-    // each step between delays.
-    private final Timer timer = new Timer(delay, new TimerListener());
-    //</editor-fold>
-
     //<editor-fold desc="Should not depend on specific View. Observer?">
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
@@ -34,52 +26,22 @@ public class CarController {
 
     //methods:
 
-    //<editor-fold desc="main(): Does not belong in Controller. Application?">
-    public static void main(String[] args) {
-        // Instance of this class
-        CarController cc = new CarController();
-
-        Vehicle volvo = new Volvo240();
-        Vehicle saab = new Saab95();
-        Vehicle scania = new Scania();
-
-        saab.setYCoordinate(100);
-        scania.setYCoordinate(200);
-
-        cc.cars.add(volvo);
-        cc.cars.add(saab);
-        cc.cars.add(scania);
-
-        // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
-
-        // Start the timer
-        cc.timer.start();
-    }
-    //</editor-fold>
-
-    //<editor-fold desc="Timer related: does not belong in Controller">
-    /* Each step the TimerListener moves all the cars in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
-    private class TimerListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            for (Vehicle car : cars) {
-                int x = (int) Math.round(car.getXCoordinate());
-                int y = (int) Math.round(car.getYCoordinate());
-                if(y > 500 || y < 0){
-                    car.turnLeft();
-                    car.turnLeft();
-                }
-                car.move();
-                frame.drawPanel.moveit(x, y, car);
-                // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
-
+    public void moveVehicles() {
+        for (Vehicle car : cars) {
+            int x = (int) Math.round(car.getXCoordinate());
+            int y = (int) Math.round(car.getYCoordinate());
+            if (y > 500 || y < 0) {
+                car.turnLeft();
+                car.turnLeft();
             }
+            car.move();
+            frame.drawPanel.moveit(x, y, car);
+            // repaint() calls the paintComponent method of the panel
+            frame.drawPanel.repaint();
+
         }
     }
-    //</editor-fold>
+
 
     // Calls the gas method for each car once
     void gas(int amount) {
