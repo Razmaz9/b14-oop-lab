@@ -1,7 +1,9 @@
 package src;
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 public abstract class Vehicle implements Movable {
+    public Point2D.Double position = new Point2D.Double();
     protected int nrDoors; // Number of doors on the car
     protected double enginePower; // Engine power of the car
     protected String modelName; // The car model name
@@ -17,9 +19,17 @@ public abstract class Vehicle implements Movable {
         this.modelName = modelName;
         setColor(color);
         setDirection(Direction.NORTH);
-        setXCoordinate(0);
-        setYCoordinate(0);
+        setPosition(0, 0);
         stopEngine();
+    }
+
+    private void setPosition(int x, int y) {
+        this.position.x = x;
+        this.position.y = y;
+    }
+
+    public Point2D.Double getPosition() {
+        return position;
     }
 
     public int getNrDoors() {
@@ -55,19 +65,19 @@ public abstract class Vehicle implements Movable {
     }
 
     public double getXCoordinate() {
-        return xCoordinate;
+        return getPosition().x;
     }
 
     public void setXCoordinate(double xCoordinate) {
-        this.xCoordinate = xCoordinate;
+        this.position.x = xCoordinate;
     }
 
     public double getYCoordinate() {
-        return yCoordinate;
+        return getPosition().y;
     }
 
     public void setYCoordinate(double yCoordinate) {
-        this.yCoordinate = yCoordinate;
+        this.position.y = yCoordinate;
     }
 
     public String getModelName() {
