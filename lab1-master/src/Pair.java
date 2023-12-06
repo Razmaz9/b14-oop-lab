@@ -1,7 +1,5 @@
 package src;
 
-import java.awt.*;
-
 public class Pair<T, T1> {
 
     T first;
