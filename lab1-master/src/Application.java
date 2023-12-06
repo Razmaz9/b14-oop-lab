@@ -26,6 +26,12 @@ public class Application {
 
         app.carController = new CarController();
 
+        // Start a new view and send a reference of self
+        app.carView = new CarView("CarSim 1.0");
+        app.setCarViewLocation();
+        app.carController.frame = app.carView;
+        app.carController.initComponents();
+
         Vehicle volvo = new Volvo240();
         Vehicle saab = new Saab95();
         Vehicle scania = new Scania();
@@ -33,14 +39,9 @@ public class Application {
         saab.setYCoordinate(100);
         scania.setYCoordinate(200);
 
-        app.carController.cars.add(volvo);
-        app.carController.cars.add(saab);
-        app.carController.cars.add(scania);
-
-        // Start a new view and send a reference of self
-        app.carView = new CarView("CarSim 1.0", app.carController);
-        app.setCarViewLocation();
-        app.carController.frame = app.carView;
+        app.addVehicle(volvo, "Volvo240.jpg");
+        app.addVehicle(saab, "Saab95.jpg");
+        app.addVehicle(scania, "Scania.jpg");
 
         // Start the timer
         app.timer.start();
@@ -66,6 +67,11 @@ public class Application {
         carView.setLocation(dim.width / 2 - carView.getSize().width / 2, dim.height / 2 - carView.getSize().height / 2);
         //</editor-fold>
 
+    }
+
+    private void addVehicle(Vehicle vehicle, String imageFileName) {
+        carController.vehicles.add(vehicle);
+        carView.addVehicle(vehicle.position, imageFileName);
     }
 
 }
