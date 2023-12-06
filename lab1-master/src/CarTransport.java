@@ -3,9 +3,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarTransport extends Vehicle implements LIFOStorage<Car> {
+public class CarTransport extends Vehicle implements LIFOStorage<StorableCar> {
 
-    private final List<Car> storage = new ArrayList<>();
+    private final List<StorableCar> storage = new ArrayList<>();
     private boolean platformIsOpen = true;
     private int maxStorage;
 
@@ -24,7 +24,7 @@ public class CarTransport extends Vehicle implements LIFOStorage<Car> {
     }
 
     @Override
-    public void storeItem(Car vehicle) {
+    public void storeItem(StorableCar vehicle) {
         if (
                 getCurrentSpeed() == 0 &&
                         checkIfLoadable(vehicle) &&
@@ -47,14 +47,14 @@ public class CarTransport extends Vehicle implements LIFOStorage<Car> {
     @Override
     public void removeLastItem() {
         int lastIndex = getStorage().size() - 1;
-        Car vehicle = getStorage().get(lastIndex);
+        StorableCar vehicle = getStorage().get(lastIndex);
         if (isPlatformOpen())
             getStorage().remove(lastIndex);
         vehicle.setXCoordinate(getXCoordinate() - 1);
         vehicle.setYCoordinate(getYCoordinate() - 1);
     }
 
-    private boolean checkIfLoadable(Car vehicle) {
+    private boolean checkIfLoadable(StorableCar vehicle) {
         double xDifferential = getXCoordinate() - vehicle.getXCoordinate();
         double yDifferential = getYCoordinate() - vehicle.getYCoordinate();
         return Math.abs(xDifferential) < 1 && Math.abs(yDifferential) < 1;  // If car is 1 coordinate unit away from car transport, return true, else false.
@@ -64,7 +64,7 @@ public class CarTransport extends Vehicle implements LIFOStorage<Car> {
     public void move() {
         if (!isPlatformOpen()) {
             super.move();
-            for (Car vehicle : getStorage()) {
+            for (StorableCar vehicle : getStorage()) {
                 vehicle.setXCoordinate(getXCoordinate());
                 vehicle.setYCoordinate(getYCoordinate());
             }
@@ -76,7 +76,7 @@ public class CarTransport extends Vehicle implements LIFOStorage<Car> {
         return 1;
     }
 
-    public List<Car> getStorage() {
+    public List<StorableCar> getStorage() {
         return storage;
     }
 
