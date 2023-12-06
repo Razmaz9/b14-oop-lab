@@ -19,16 +19,20 @@ public class CarView extends JFrame{
     private static final int X = 800;
     private static final int Y = 800;
 
+    //<editor-fold desc="View should not depend directly on specific Controller">
     // The controller member
     CarController carC;
+    //</editor-fold>
 
     DrawPanel drawPanel = new DrawPanel(X, Y-240);
 
+    int gasAmount = 0;
+
+    //<editor-fold desc="Does not present model, only its controls. Belongs in Controller?">
     JPanel controlPanel = new JPanel();
 
     JPanel gasPanel = new JPanel();
     JSpinner gasSpinner = new JSpinner();
-    int gasAmount = 0;
     JLabel gasLabel = new JLabel("Amount of gas");
 
     JButton gasButton = new JButton("Gas");
@@ -40,10 +44,13 @@ public class CarView extends JFrame{
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
+    //</editor-fold>
 
     // Constructor
     public CarView(String framename, CarController cc){
+        //<editor-fold desc="View should not directly depend on controller">
         this.carC = cc;
+        //</editor-fold>
         initComponents(framename);
     }
 
@@ -59,6 +66,7 @@ public class CarView extends JFrame{
 
 
 
+        //<editor-fold desc="Does not present model, only its controls. Belongs in Controller?">
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value
                         0, //min
@@ -101,7 +109,9 @@ public class CarView extends JFrame{
         stopButton.setForeground(Color.black);
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(stopButton);
+        //</editor-fold>
 
+        //<editor-fold desc="Depends directly on Controller. 'Notify listeners' instead?">
         // This actionListener is for the gas button only
         // TODO: Create more for each component as necessary
 
@@ -159,14 +169,17 @@ public class CarView extends JFrame{
                 carC.brake(gasAmount);
             }
         });
+        //</editor-fold>
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
 
+        //<editor-fold desc="Handles frame placement. Should be done by application instead?">
         // Get the computer screen resolution
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         // Center the frame
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        //</editor-fold>
         // Make the frame visible
         this.setVisible(true);
         // Make sure the frame exits when "x" is pressed

@@ -14,19 +14,27 @@ import java.util.ArrayList;
 public class CarController {
     // member fields:
 
+    //<editor-fold desc="Timer: does not belong in Controller">
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
     // The timer is started with an listener (see below) that executes the statements
     // each step between delays.
     private final Timer timer = new Timer(delay, new TimerListener());
+    //</editor-fold>
 
+    //<editor-fold desc="Should not depend on specific View. Observer?">
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
+    //</editor-fold>
+
+    //<editor-fold desc="Should Controller hold instances of Model?">
     // A list of cars, modify if needed
     ArrayList<Vehicle> cars = new ArrayList<>();
+    //</editor-fold>
 
     //methods:
 
+    //<editor-fold desc="main(): Does not belong in Controller. Application?">
     public static void main(String[] args) {
         // Instance of this class
         CarController cc = new CarController();
@@ -48,7 +56,9 @@ public class CarController {
         // Start the timer
         cc.timer.start();
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Timer related: does not belong in Controller">
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
     * */
@@ -69,6 +79,7 @@ public class CarController {
             }
         }
     }
+    //</editor-fold>
 
     // Calls the gas method for each car once
     void gas(int amount) {
