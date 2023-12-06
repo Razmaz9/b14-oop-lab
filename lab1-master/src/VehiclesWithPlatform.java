@@ -2,7 +2,7 @@ package src;
 
 import java.awt.*;
 
-public abstract class VehiclesWithPlatform extends Vehicle {
+public abstract class VehiclesWithPlatform extends Truck {
 
     private final int maxAngle;
     private final int minAngle;
