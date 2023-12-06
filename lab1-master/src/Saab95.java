@@ -2,7 +2,7 @@ package src;
 
 import java.awt.*;
 
-public class Saab95 extends Car {
+public class Saab95 extends StorableCar implements HasTurbo {
     private boolean turboOn;
 
     public Saab95() {
@@ -11,10 +11,12 @@ public class Saab95 extends Car {
     }
 
 
+    @Override
     public void setTurboOn() {
         turboOn = true;
     }
 
+    @Override
     public void setTurboOff() {
         turboOn = false;
     }

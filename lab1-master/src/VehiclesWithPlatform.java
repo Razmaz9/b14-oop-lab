@@ -2,7 +2,7 @@ package src;
 
 import java.awt.*;
 
-public abstract class VehiclesWithPlatform extends Vehicle {
+public abstract class VehiclesWithPlatform extends Truck implements HasAngledPlatform {
 
     private final int maxAngle;
     private final int minAngle;
@@ -16,10 +16,12 @@ public abstract class VehiclesWithPlatform extends Vehicle {
     }
 
 
+    @Override
     public int getPlatformAngle() {
         return platformAngle;
     }
 
+    @Override
     public void setPlatformAngle(int angle) {
         if (getCurrentSpeed() == 0) {
             if (angle <= getMinAngle()) {
@@ -29,10 +31,12 @@ public abstract class VehiclesWithPlatform extends Vehicle {
         }
     }
 
+    @Override
     public int getMaxAngle() {
         return maxAngle;
     }
 
+    @Override
     public int getMinAngle() {
         return minAngle;
     }

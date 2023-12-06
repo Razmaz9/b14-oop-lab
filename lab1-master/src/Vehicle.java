@@ -1,12 +1,13 @@
 package src;
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 public abstract class Vehicle implements Movable {
-    private final String[] directions = {"N", "E", "S", "W"};
+    public Point2D.Double position = new Point2D.Double();
     protected int nrDoors; // Number of doors on the car
     protected double enginePower; // Engine power of the car
     protected String modelName; // The car model name
-    private int direction; // The direction that the car is facing
+    private Direction direction; // The direction that the car is facing
     private double currentSpeed; // The current speed of the car must be public
     private Color color; // Color of the car
     private double xCoordinate; // The x coordinate of the car
@@ -17,10 +18,18 @@ public abstract class Vehicle implements Movable {
         this.enginePower = enginePower;
         this.modelName = modelName;
         setColor(color);
-        setDirection(0);
-        setXCoordinate(0);
-        setYCoordinate(0);
+        setDirection(Direction.NORTH);
+        setPosition(0, 0);
         stopEngine();
+    }
+
+    private void setPosition(int x, int y) {
+        this.position.x = x;
+        this.position.y = y;
+    }
+
+    public Point2D.Double getPosition() {
+        return position;
     }
 
     public int getNrDoors() {
@@ -47,28 +56,28 @@ public abstract class Vehicle implements Movable {
         color = clr;
     }
 
-    public String getDirection() {
-        return directions[direction];
+    public Direction getDirection() {
+        return direction;
     }
 
-    public void setDirection(int direction) {
+    public void setDirection(Direction direction) {
         this.direction = direction;
     }
 
     public double getXCoordinate() {
-        return xCoordinate;
+        return getPosition().x;
     }
 
     public void setXCoordinate(double xCoordinate) {
-        this.xCoordinate = xCoordinate;
+        this.position.x = xCoordinate;
     }
 
     public double getYCoordinate() {
-        return yCoordinate;
+        return getPosition().y;
     }
 
     public void setYCoordinate(double yCoordinate) {
-        this.yCoordinate = yCoordinate;
+        this.position.y = yCoordinate;
     }
 
     public String getModelName() {
@@ -87,23 +96,22 @@ public abstract class Vehicle implements Movable {
     public void move() {
 
         double speed = getCurrentSpeed();
-        String currentDirection = getDirection();
-        switch (currentDirection) {
-            case "N" -> setYCoordinate(getYCoordinate() + speed);
-            case "S" -> setYCoordinate(getYCoordinate() - speed);
-            case "E" -> setXCoordinate(getXCoordinate() + speed);
-            case "W" -> setXCoordinate(getXCoordinate() - speed);
+        switch (direction) {
+            case NORTH -> setYCoordinate(getYCoordinate() + speed);
+            case SOUTH -> setYCoordinate(getYCoordinate() - speed);
+            case EAST -> setXCoordinate(getXCoordinate() + speed);
+            case WEST -> setXCoordinate(getXCoordinate() - speed);
         }
     }
 
     @Override
     public void turnLeft() {
-        setDirection((direction + 1) % 4);
+        setDirection(direction.getPrevious());
     }
 
     @Override
     public void turnRight() {
-        setDirection((direction + 3) % 4);
+        setDirection(direction.getNext());
     }
 
     public void incrementSpeed(double amount) {
