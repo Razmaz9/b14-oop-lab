@@ -1,6 +1,6 @@
 package src;
 
-public interface Storage<T extends Storable> {
+public interface Storage<T> {
     void storeItem(T item);
 
     int getMaxStorage();
