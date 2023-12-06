@@ -15,19 +15,8 @@ import java.util.ArrayList;
  */
 
 public class CarController {
-    // member fields:
-
-    //<editor-fold desc="Should not depend on specific View. Observer?">
-    // The frame that represents this instance View of the MVC pattern
     CarView frame;
-    //</editor-fold>
-
-    //<editor-fold desc="Should Controller hold instances of Model?">
-    // A list of cars, modify if needed
     ArrayList<Vehicle> vehicles = new ArrayList<>();
-    //</editor-fold>
-    
-    //<editor-fold desc="Create buttons, panels and labels">
     JPanel controlPanel = new JPanel();
 
     JPanel gasPanel = new JPanel();
@@ -43,14 +32,9 @@ public class CarController {
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
-    //</editor-fold>
-
-
-    //methods:
 
 
     public void initComponents() {
-        //<editor-fold desc="Set layout and add components">
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value
                         0, //min
@@ -93,9 +77,6 @@ public class CarController {
         stopButton.setForeground(Color.black);
         stopButton.setPreferredSize(new Dimension(800/5-15,200));
         frame.add(stopButton);
-        //</editor-fold>
-
-        //<editor-fold desc="Add ActionListeners for buttons">
 
         lowerBedButton.addActionListener(new ActionListener() {
             @Override
@@ -151,21 +132,20 @@ public class CarController {
                 brake(frame.gasAmount);
             }
         });
-        //</editor-fold>
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         frame.pack();
     }
 
     public void moveVehicles() {
-        for (Vehicle car : vehicles) {
-            int x = (int) Math.round(car.getXCoordinate());
-            int y = (int) Math.round(car.getYCoordinate());
+        for (Vehicle vehicle : vehicles) {
+            int x = (int) Math.round(vehicle.getXCoordinate());
+            int y = (int) Math.round(vehicle.getYCoordinate());
             if (y > 500 || y < 0) {
-                car.turnLeft();
-                car.turnLeft();
+                vehicle.turnLeft();
+                vehicle.turnLeft();
             }
-            car.move();
+            vehicle.move();
             // repaint() calls the paintComponent method of the panel
             frame.drawPanel.repaint();
 
@@ -173,59 +153,59 @@ public class CarController {
     }
 
 
-    // Calls the gas method for each car once
+    // Calls the gas method for each vehicle once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
-        for (Vehicle car : vehicles) {
-            car.gas(gas);
+        for (Vehicle vehicle : vehicles) {
+            vehicle.gas(gas);
         }
     }
 
     void startEngine(){
-        for (Vehicle car : vehicles){
-            car.startEngine();
+        for (Vehicle vehicle : vehicles){
+            vehicle.startEngine();
         }
     }
 
     void stopEngine(){
-        for (Vehicle car : vehicles){
-            car.stopEngine();
+        for (Vehicle vehicle : vehicles){
+            vehicle.stopEngine();
         }
     }
 
     void setTurboOnForSaab(){
-        for (Vehicle car : vehicles){
-            if(car instanceof Saab95)
-                ((Saab95) car).setTurboOn();
+        for (Vehicle vehicle : vehicles){
+            if(vehicle instanceof HasTurbo)
+                ((HasTurbo) vehicle).setTurboOn();
         }
     }
 
     void setTurboOffForSaab(){
-        for (Vehicle car : vehicles){
-            if(car instanceof Saab95)
-                ((Saab95) car).setTurboOff();
+        for (Vehicle vehicle : vehicles){
+            if(vehicle instanceof HasTurbo)
+                ((HasTurbo) vehicle).setTurboOff();
         }
     }
 
     void scaniaLiftBed(){
-        for (Vehicle car : vehicles) {
-            if (car instanceof Scania)
-                ((Scania) car).setPlatformAngle(0);
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof HasAngledPlatform)
+                ((HasAngledPlatform) vehicle).setPlatformAngle(0);
         }
     }
 
     void scaniaLowerBed(){
-        for (Vehicle car : vehicles) {
-            if (car instanceof Scania)
-                ((Scania) car).setPlatformAngle(70);
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof HasAngledPlatform)
+                ((HasAngledPlatform) vehicle).setPlatformAngle(70);
         }
     }
 
 
     void brake(int amount){
         double brake = ((double) amount) / 100;
-        for (Vehicle car : vehicles) {
-            car.brake(brake);
+        for (Vehicle vehicle : vehicles) {
+            vehicle.brake(brake);
         }
     }
 }

@@ -32,9 +32,9 @@ public class Application {
         app.carController.frame = app.carView;
         app.carController.initComponents();
 
-        Vehicle volvo = new Volvo240();
-        Vehicle saab = new Saab95();
-        Vehicle scania = new Scania();
+        Vehicle volvo = VehicleFactory.createVolvo240();
+        Vehicle saab = VehicleFactory.createSaab95();
+        Vehicle scania = VehicleFactory.createScania();
 
         saab.setYCoordinate(100);
         scania.setYCoordinate(200);
