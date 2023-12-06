@@ -18,7 +18,7 @@ public class Tests {
 
     public Scania Scania = new Scania();
 
-    public Workshop<Car> Workshop = new Workshop<>();
+    public Workshop<StorableCar> Workshop = new Workshop<>();
     public Workshop<Volvo240> VolvoWorkshop = new Workshop<>();
     public Workshop<Saab95> SaabWorkshop = new Workshop<>();
 
@@ -32,14 +32,14 @@ public class Tests {
 
     @Test
     public void getDirection() {
-        Assert.assertEquals("Get direction works", Saab.getDirection(), "N");
+        Assert.assertEquals("Get direction works", Saab.getDirection(), Direction.NORTH);
     }
 
 
     @Test
     public void turningLeft() {
         Saab.turnLeft();
-        Assert.assertEquals("Turning left works", Saab.getDirection(), "E");
+        Assert.assertEquals("Turning left works", Saab.getDirection(), Direction.WEST);
     }
 
     @Test
@@ -48,13 +48,13 @@ public class Tests {
         Saab.turnLeft();
         Saab.turnLeft();
         Saab.turnLeft();
-        Assert.assertEquals("Rotating left works", Saab.getDirection(), "N");
+        Assert.assertEquals("Rotating left works", Saab.getDirection(), Direction.NORTH);
     }
 
     @Test
     public void turningRight() {
         Saab.turnRight();
-        Assert.assertEquals("Turning right works", Saab.getDirection(), "W");
+        Assert.assertEquals("Turning right works", Saab.getDirection(), Direction.EAST);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class Tests {
         Saab.turnRight();
         Saab.turnRight();
         Saab.turnRight();
-        Assert.assertEquals("Rotating right works", Saab.getDirection(), "N");
+        Assert.assertEquals("Rotating right works", Saab.getDirection(), Direction.NORTH);
     }
 
     @Test
