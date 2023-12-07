@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -15,13 +16,12 @@ import java.io.IOException;
  * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
-public class CarView extends JFrame{
+public class CarView extends JFrame implements ICarObserver{
     private static final int X = 800;
     private static final int Y = 800;
 
     DrawPanel drawPanel = new DrawPanel(X, Y-240);
 
-    int gasAmount = 0;
 
 
     // Constructor
@@ -58,5 +58,11 @@ public class CarView extends JFrame{
             e.printStackTrace();
         }
         return image;
+    }
+
+    @Override
+    public void actOnModelChange(String reason) {
+        if (Objects.equals(reason, "CarMoved"))
+            drawPanel.repaint();
     }
 }

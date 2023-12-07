@@ -10,14 +10,19 @@ import java.util.ArrayList;
 
 /*
 * This class represents the Controller part in the MVC pattern.
-* It's responsibilities is to listen to the View and responds in a appropriate manner by
+* Its responsibilities is to listen to the View and responds in a appropriate manner by
 * modifying the model state and the updating the view.
  */
 
 public class CarController {
     CarView frame;
-    ArrayList<Vehicle> vehicles = new ArrayList<>();
+    CarModel model;
+
     JPanel controlPanel = new JPanel();
+
+    CarController(CarModel model){
+        this.model = model;
+    }
 
     JPanel gasPanel = new JPanel();
     JSpinner gasSpinner = new JSpinner();
@@ -33,6 +38,7 @@ public class CarController {
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
 
+    int gasAmount = 0;
 
     public void initComponents() {
         SpinnerModel spinnerModel =
@@ -43,7 +49,7 @@ public class CarController {
         gasSpinner = new JSpinner(spinnerModel);
         gasSpinner.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                frame.gasAmount = (int) ((JSpinner)e.getSource()).getValue();
+                gasAmount = (int) ((JSpinner)e.getSource()).getValue();
             }
         });
 
@@ -122,14 +128,14 @@ public class CarController {
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gas(frame.gasAmount);
+                gas(gasAmount);
             }
         });
 
         brakeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                brake(frame.gasAmount);
+                brake(gasAmount);
             }
         });
 
@@ -137,75 +143,39 @@ public class CarController {
         frame.pack();
     }
 
-    public void moveVehicles() {
-        for (Vehicle vehicle : vehicles) {
-            int x = (int) Math.round(vehicle.getXCoordinate());
-            int y = (int) Math.round(vehicle.getYCoordinate());
-            if (y > 500 || y < 0) {
-                vehicle.turnLeft();
-                vehicle.turnLeft();
-            }
-            vehicle.move();
-            // repaint() calls the paintComponent method of the panel
-            frame.drawPanel.repaint();
 
-        }
-    }
 
 
     // Calls the gas method for each vehicle once
     void gas(int amount) {
-        double gas = ((double) amount) / 100;
-        for (Vehicle vehicle : vehicles) {
-            vehicle.gas(gas);
-        }
+        model.gasAllCars(amount);
     }
 
     void startEngine(){
-        for (Vehicle vehicle : vehicles){
-            vehicle.startEngine();
-        }
+        model.startEngineForAllCars();
     }
 
     void stopEngine(){
-        for (Vehicle vehicle : vehicles){
-            vehicle.stopEngine();
-        }
+        model.stopEngineForAllCars();
     }
 
     void setTurboOnForSaab(){
-        for (Vehicle vehicle : vehicles){
-            if(vehicle instanceof HasTurbo)
-                ((HasTurbo) vehicle).setTurboOn();
-        }
+        model.setTurboOnForSaabCars();
     }
 
     void setTurboOffForSaab(){
-        for (Vehicle vehicle : vehicles){
-            if(vehicle instanceof HasTurbo)
-                ((HasTurbo) vehicle).setTurboOff();
-        }
+        model.setTurboOffForSaabCars();
     }
 
     void scaniaLiftBed(){
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof HasAngledPlatform)
-                ((HasAngledPlatform) vehicle).setPlatformAngle(0);
-        }
+        model.liftBedForScaniaTrucks();
     }
 
     void scaniaLowerBed(){
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof HasAngledPlatform)
-                ((HasAngledPlatform) vehicle).setPlatformAngle(70);
-        }
+        model.lowerBedForScaniaTrucks();
     }
 
-
     void brake(int amount){
-        double brake = ((double) amount) / 100;
-        for (Vehicle vehicle : vehicles) {
-            vehicle.brake(brake);
-        }
+        model.brakeAllCars(amount);
     }
 }

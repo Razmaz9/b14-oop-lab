@@ -11,37 +11,36 @@ public class Application {
     //<editor-fold desc="Timer: does not belong in Controller">
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
-    // The timer is started with an listener (see below) that executes the statements
+    // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
     private final Timer timer = new Timer(delay, new TimerListener());
     //</editor-fold>
 
     private CarController carController;
     private CarView carView;
+    private static CarModel model;
 
     //<editor-fold desc="main(): Does not belong in Controller. Application?">
     public static void main(String[] args) {
         // Instance of this class
         Application app = new Application();
 
-        app.carController = new CarController();
+        model = new CarModel();
+        app.carController = new CarController(model);
+
 
         // Start a new view and send a reference of self
         app.carView = new CarView("CarSim 1.0");
         app.setCarViewLocation();
         app.carController.frame = app.carView;
+        model.addObserver(app.carView);
         app.carController.initComponents();
+        model.createCars();
 
-        Vehicle volvo = VehicleFactory.createVolvo240();
-        Vehicle saab = VehicleFactory.createSaab95();
-        Vehicle scania = VehicleFactory.createScania();
-
-        saab.setYCoordinate(100);
-        scania.setYCoordinate(200);
-
-        app.addVehicle(volvo, "Volvo240.jpg");
-        app.addVehicle(saab, "Saab95.jpg");
-        app.addVehicle(scania, "Scania.jpg");
+        // UGLY CODE !!!!
+        app.addVehicle(model.vehicles.get(0), "Volvo240.jpg");
+        app.addVehicle(model.vehicles.get(1), "Saab95.jpg");
+        app.addVehicle(model.vehicles.get(2), "Scania.jpg");
 
         // Start the timer
         app.timer.start();
@@ -54,7 +53,7 @@ public class Application {
      * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            carController.moveVehicles();
+            model.moveVehicles();
         }
     }
     //</editor-fold>
@@ -70,7 +69,6 @@ public class Application {
     }
 
     private void addVehicle(Vehicle vehicle, String imageFileName) {
-        carController.vehicles.add(vehicle);
         carView.addVehicle(vehicle.position, imageFileName);
     }
 
