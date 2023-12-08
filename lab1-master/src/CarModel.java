@@ -13,7 +13,7 @@ public class CarModel {
         listOfObservers.add(frame);
     }
 
-    private void notifyObservers(){
+    private void notifyObserversVehicleMoved(){
         for(ICarObserver frame : listOfObservers)
             frame.actOnVehicleMoved();
     }
@@ -28,7 +28,7 @@ public class CarModel {
             }
             vehicle.move();
             // repaint() calls the paintComponent method of the panel
-            notifyObservers();
+            notifyObserversVehicleMoved();
         }
     }
     void gasAllCars(int amount){

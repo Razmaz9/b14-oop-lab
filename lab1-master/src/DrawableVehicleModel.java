@@ -12,11 +12,6 @@ public class DrawableVehicleModel {
         carModel.addObserver(observer);
     }
 
-    private void notifyObserversCarMoved(){
-        for(ICarObserver observer : carModel.listOfObservers) {
-            observer.actOnVehicleMoved();
-        }
-    }
 
     private void notifyObserversCarAdded(){
         for(ICarObserver observer : carModel.listOfObservers) {
