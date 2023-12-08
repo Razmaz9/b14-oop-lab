@@ -2,6 +2,7 @@ package src;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class DrawableVehicleModel {
 
@@ -133,7 +134,14 @@ public class DrawableVehicleModel {
     }
 
     public void addRandomVehicle() {
-
+        Random rnd = new Random();
+        int rndInt = rnd.nextInt(3);
+        switch (rndInt) {
+            case 0 -> addDrawableVolvo240();
+            case 1 -> addDrawableSaab95();
+            case 2 -> addDrawableScania();
+            default -> throw new IllegalStateException("Unexpected value: " + rndInt);
+        };
     }
 
     public void addDrawableVolvo240() {

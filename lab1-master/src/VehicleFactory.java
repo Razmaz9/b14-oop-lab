@@ -1,5 +1,7 @@
 package src;
 
+import java.util.Random;
+
 public class VehicleFactory {
     public static Vehicle createSaab95() {
         return Saab95Factory.createSaab95();
