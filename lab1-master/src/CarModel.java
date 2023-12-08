@@ -90,4 +90,8 @@ public class CarModel {
         return !vehicles.add(vehicle);
     }
 
+    public void removeVehicle() {
+        if (!vehicles.isEmpty()) vehicles.removeLast();
     }
+
+}
