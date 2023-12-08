@@ -23,7 +23,7 @@ public class Application {
     private final Timer timer = new Timer(delay, new TimerListener());
     //</editor-fold>
 
-    private JFrame mainFrame = new JFrame();
+    private final JFrame mainFrame = new JFrame();
 
     private void initFrame(String title) {
         mainFrame.setTitle(title);
@@ -85,7 +85,7 @@ public class Application {
         // Start the timer
         app.timer.start();
     }
-    private class TimerListener implements ActionListener {
+    private static class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             model.moveVehicles();
         }
@@ -102,8 +102,5 @@ public class Application {
 
     }
 
-    private void addVehicle(Vehicle vehicle, String imageFileName) {
-        carView.addVehicle(vehicle.position, imageFileName);
-    }
 
 }

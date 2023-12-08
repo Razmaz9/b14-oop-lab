@@ -6,17 +6,12 @@ import java.util.Random;
 
 public class DrawableVehicleModel {
 
-    private CarModel carModel = new CarModel();
+    private final CarModel carModel = new CarModel();
     public List<DrawableVehicle> drawableVehicles = new ArrayList<>();
     public void addObserver(ICarObserver observer){
         carModel.addObserver(observer);
     }
 
-    private void notifyObserversCarMoved(){
-        for(ICarObserver observer : carModel.listOfObservers) {
-            observer.actOnVehicleMoved();
-        }
-    }
 
     private void notifyObserversCarAdded(){
         for(ICarObserver observer : carModel.listOfObservers) {
@@ -30,22 +25,9 @@ public class DrawableVehicleModel {
         }
     }
 
-    public void createCars(){
-        Vehicle volvo = VehicleFactory.createVolvo240();
-        Vehicle saab = VehicleFactory.createSaab95();
-        Vehicle scania = VehicleFactory.createScania();
-
-        saab.setYCoordinate(100);
-        scania.setYCoordinate(200);
-
-        addDrawableVehicle(volvo, "Volvo240.jpg");
-        addDrawableVehicle(saab, "Saab95.jpg");
-        addDrawableVehicle(scania, "Scania.jpg");
-    }
-
     private void addDrawableVehicle(Vehicle vehicle, String imageFileName) {
         DrawableVehicle drawableVehicle = new DrawableVehicle(vehicle, imageFileName);
-        if (!carModel.addVehicle(vehicle)) return;
+        if (carModel.addVehicle(vehicle)) return;
         drawableVehicles.add(drawableVehicle);
         notifyObserversCarAdded();
     }
@@ -54,7 +36,7 @@ public class DrawableVehicleModel {
         DrawableVehicle drawableVehicle = new DrawableVehicle(vehicle, imageFileName);
         drawableVehicle.getPosition().x = x;
         drawableVehicle.getPosition().y = y;
-        if (!carModel.addVehicle(vehicle)) return;
+        if (carModel.addVehicle(vehicle)) return;
         drawableVehicles.add(drawableVehicle);
         notifyObserversCarAdded();
     }
@@ -110,7 +92,7 @@ public class DrawableVehicleModel {
             case 1 -> addDrawableSaab95();
             case 2 -> addDrawableScania();
             default -> throw new IllegalStateException("Unexpected value: " + rndInt);
-        };
+        }
     }
 
     public void addDrawableVolvo240() {

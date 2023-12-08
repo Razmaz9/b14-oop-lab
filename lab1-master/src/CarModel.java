@@ -85,28 +85,9 @@ public class CarModel {
         }
     }
 
-    public void addRandomVehicle() {
-
-    }
-
-    public void addVolvo240() {
-        addVehicle(VehicleFactory.createVolvo240());
-    }
-
-    public void addSaab95() {
-        addVehicle(VehicleFactory.createSaab95());
-    }
-
-    public void addScania() {
-        addVehicle(VehicleFactory.createScania());
-    }
-
     public boolean addVehicle(Vehicle vehicle) {
-        if (vehicles.size() >= 10) return false;
-        return vehicles.add(vehicle);
+        if (vehicles.size() >= 10) return true;
+        return !vehicles.add(vehicle);
     }
 
-    public void removeCar() {
-        if (!vehicles.isEmpty()) vehicles.removeLast();
     }
-}
