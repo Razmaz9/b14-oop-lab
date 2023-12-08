@@ -56,7 +56,7 @@ public class DrawableVehicleModel {
 
     public void removeLastVehicle() {
         if (!carModel.vehicles.isEmpty()) {
-            carModel.vehicles.removeLast();
+            carModel.removeVehicle();
             drawableVehicles.removeLast();
         }
         notifyObserversCarRemoved();

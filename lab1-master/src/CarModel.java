@@ -106,7 +106,7 @@ public class CarModel {
         return vehicles.add(vehicle);
     }
 
-    public void removeCar() {
+    public void removeVehicle() {
         if (!vehicles.isEmpty()) vehicles.removeLast();
     }
 }
