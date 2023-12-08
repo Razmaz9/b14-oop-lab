@@ -2,8 +2,6 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class AddCarController {
 
@@ -35,7 +33,7 @@ public class AddCarController {
 
         addCarButton.addActionListener(e -> {
             switch (choices.getSelectedIndex()) {
-                case 0 -> model.addRandomVehicle();
+                case 0 -> model.addRandomDrawableVehicle();
                 case 1 -> model.addDrawableVolvo240();
                 case 2 -> model.addDrawableSaab95();
                 case 3 -> model.addDrawableScania();

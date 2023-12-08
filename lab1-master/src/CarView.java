@@ -60,8 +60,7 @@ public class CarView extends JPanel implements ICarObserver{
     }
 
     @Override
-    public void actOnVehicleMoved(String reason) {
-        if (Objects.equals(reason, "CarMoved"))
+    public void actOnVehicleMoved() {
             drawPanel.repaint();
     }
 

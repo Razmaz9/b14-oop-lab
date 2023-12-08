@@ -15,21 +15,9 @@ public class CarModel {
 
     private void notifyObservers(){
         for(ICarObserver frame : listOfObservers)
-            frame.actOnVehicleMoved("CarMoved");
+            frame.actOnVehicleMoved();
     }
 
-    public void createCars(){
-        Vehicle volvo = VehicleFactory.createVolvo240();
-        Vehicle saab = VehicleFactory.createSaab95();
-        Vehicle scania = VehicleFactory.createScania();
-
-        saab.setYCoordinate(100);
-        scania.setYCoordinate(200);
-
-        vehicles.add(volvo);
-        vehicles.add(saab);
-        vehicles.add(scania);
-    }
 
     public void moveVehicles() {
         for (Vehicle vehicle : vehicles) {

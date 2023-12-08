@@ -14,7 +14,7 @@ public class DrawableVehicleModel {
 
     private void notifyObserversCarMoved(){
         for(ICarObserver observer : carModel.listOfObservers) {
-            observer.actOnVehicleMoved("CarMoved");
+            observer.actOnVehicleMoved();
         }
     }
 
@@ -68,72 +68,41 @@ public class DrawableVehicleModel {
     }
 
     public void moveVehicles() {
-        for (Vehicle vehicle : carModel.vehicles) {
-            int y = (int) Math.round(vehicle.getYCoordinate());
-            if (y > 500 || y < 0) {
-                vehicle.turnLeft();
-                vehicle.turnLeft();
-            }
-            vehicle.move();
-            // repaint() calls the paintComponent method of the panel
-            notifyObserversCarMoved();
-        }
+        carModel.moveVehicles();
     }
     void gasAllCars(int amount){
-        double gas = ((double) amount) / 100;
-        for (Vehicle vehicle : carModel.vehicles) { // Is empty?????
-            vehicle.gas(gas);
-        }
+        carModel.gasAllCars(amount);
     }
 
     void startEngineForAllCars(){
-        for (Vehicle vehicle : carModel.vehicles){
-            vehicle.startEngine();
-        }
+        carModel.startEngineForAllCars();
     }
 
     void stopEngineForAllCars(){
-        for (Vehicle vehicle : carModel.vehicles){
-            vehicle.stopEngine();
-        }
+        carModel.stopEngineForAllCars();
     }
 
     void setTurboOnForSaabCars(){
-        for (Vehicle vehicle : carModel.vehicles){
-            if(vehicle instanceof HasTurbo)
-                ((HasTurbo) vehicle).setTurboOn();
-        }
+        carModel.setTurboOnForSaabCars();
     }
 
     void setTurboOffForSaabCars(){
-        for (Vehicle vehicle : carModel.vehicles){
-            if(vehicle instanceof HasTurbo)
-                ((HasTurbo) vehicle).setTurboOff();
-        }
+        carModel.setTurboOffForSaabCars();
     }
 
     void liftBedForScaniaTrucks(){
-        for (Vehicle vehicle : carModel.vehicles) {
-            if (vehicle instanceof HasAngledPlatform)
-                ((HasAngledPlatform) vehicle).setPlatformAngle(0);
-        }
+        carModel.liftBedForScaniaTrucks();
     }
 
     void lowerBedForScaniaTrucks(){
-        for (Vehicle vehicle : carModel.vehicles) {
-            if (vehicle instanceof HasAngledPlatform)
-                ((HasAngledPlatform) vehicle).setPlatformAngle(70);
-        }
+        carModel.lowerBedForScaniaTrucks();
     }
 
     void brakeAllCars(int amount) {
-        double brake = ((double) amount) / 100;
-        for (Vehicle vehicle : carModel.vehicles) {
-            vehicle.brake(brake);
-        }
+        carModel.brakeAllCars(amount);
     }
 
-    public void addRandomVehicle() {
+    public void addRandomDrawableVehicle() {
         Random rnd = new Random();
         int rndInt = rnd.nextInt(3);
         switch (rndInt) {
