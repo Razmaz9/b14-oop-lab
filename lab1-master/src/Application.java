@@ -7,6 +7,13 @@ import java.awt.event.ActionListener;
 
 public class Application {
 
+    private final int preferredWidth;
+    private final int preferredHeight;
+
+    private Application(int preferredWidth, int preferredHeight) {
+        this.preferredWidth = preferredWidth;
+        this.preferredHeight = preferredHeight;
+    }
 
     //<editor-fold desc="Timer: does not belong in Controller">
     // The delay (ms) corresponds to 20 updates a sec (hz)
@@ -16,41 +23,68 @@ public class Application {
     private final Timer timer = new Timer(delay, new TimerListener());
     //</editor-fold>
 
+    private JFrame mainFrame = new JFrame();
+
+    private void initFrame(String title) {
+        mainFrame.setTitle(title);
+        mainFrame.setLayout(new GridBagLayout());
+        GridBagConstraints gbc;
+        gbc = calculateGridBagConstraints(0, 0, 2, 1);
+        mainFrame.add(carView, gbc);
+        gbc = calculateGridBagConstraints(0, 1, 1, 1);
+        mainFrame.add(carController.mainPanel, gbc);
+        gbc = calculateGridBagConstraints(1, 1, 1, 1);
+        mainFrame.add(addCarController.mainPanel, gbc);
+
+        carView.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        carController.mainPanel.setBorder(BorderFactory.createLineBorder(Color.RED));
+        addCarController.mainPanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+        mainFrame.pack();
+        mainFrame.setVisible(true);
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    }
+
+    private GridBagConstraints calculateGridBagConstraints(int x, int y, int width, int height) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = x;
+        gbc.gridy = y;
+        gbc.gridwidth = width;
+        gbc.gridheight = height;
+        return gbc;
+    }
+
+    private AddCarController addCarController;
     private CarController carController;
     private CarView carView;
-    private static CarModel model;
+    private static DrawableVehicleModel model;
 
     //<editor-fold desc="main(): Does not belong in Controller. Application?">
     public static void main(String[] args) {
         // Instance of this class
-        Application app = new Application();
+        Application app = new Application(800, 800);
 
-        model = new CarModel();
-        app.carController = new CarController(model);
+        model = new DrawableVehicleModel();
+        app.addCarController = new AddCarController(model, 100, 240);
+        app.carController = new CarController(model, app.preferredWidth - 100, 240);
 
 
         // Start a new view and send a reference of self
-        app.carView = new CarView("CarSim 1.0");
+        app.carView = new CarView(model, app.preferredWidth, app.preferredHeight - 240);
         app.setCarViewLocation();
-        app.carController.frame = app.carView;
         model.addObserver(app.carView);
         app.carController.initComponents();
-        model.createCars();
 
         // UGLY CODE !!!!
-        app.addVehicle(model.vehicles.get(0), "Volvo240.jpg");
-        app.addVehicle(model.vehicles.get(1), "Saab95.jpg");
-        app.addVehicle(model.vehicles.get(2), "Scania.jpg");
+        model.addDrawableVolvo240();
+        model.addDrawableSaab95(0, 100);
+        model.addDrawableScania(0, 200);
+
+        app.initFrame("VehicleSim 2.0");
 
         // Start the timer
         app.timer.start();
     }
-    //</editor-fold>
-
-    //<editor-fold desc="Timer related: does not belong in Controller">
-    /* Each step the TimerListener moves all the cars in the list and tells the
-     * view to update its images. Change this method to your needs.
-     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             model.moveVehicles();

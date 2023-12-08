@@ -16,34 +16,33 @@ import java.util.Objects;
  * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
-public class CarView extends JFrame implements ICarObserver{
-    private static final int X = 800;
-    private static final int Y = 800;
+public class CarView extends JPanel implements ICarObserver{
+    private final int preferredWidth;
+    private final int preferredHeight;
 
-    DrawPanel drawPanel = new DrawPanel(X, Y-240);
-
+    DrawPanel drawPanel;
+    DrawableVehicleModel model;
 
 
     // Constructor
-    public CarView(String framename){
-        initComponents(framename);
+    public CarView(DrawableVehicleModel model, int preferredWidth, int preferredHeight){
+        this.model = model;
+        this.preferredWidth = preferredWidth;
+        this.preferredHeight = preferredHeight;
+        initComponents();
     }
 
-    private void initComponents(String title) {
-
-        this.setTitle(title);
-        this.setPreferredSize(new Dimension(X,Y));
-        this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+    private void initComponents() {
+        drawPanel = new DrawPanel(preferredWidth, preferredHeight);
+        this.setPreferredSize(new Dimension(preferredWidth, preferredHeight));
 
         this.add(drawPanel);
 
         // Make the frame pack all it's components by respecting the sizes if possible.
-        this.pack();
 
         // Make the frame visible
         this.setVisible(true);
         // Make sure the frame exits when "x" is pressed
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void addVehicle(Point2D.Double point, String imageFileName) {
@@ -61,8 +60,23 @@ public class CarView extends JFrame implements ICarObserver{
     }
 
     @Override
-    public void actOnModelChange(String reason) {
+    public void actOnVehicleMoved(String reason) {
         if (Objects.equals(reason, "CarMoved"))
             drawPanel.repaint();
+    }
+
+    @Override
+    public void actOnVehicleAdded() {
+        DrawableVehicle vehicle = model.drawableVehicles.getLast();
+        addVehicle(vehicle.getPosition(), vehicle.getImageFileName());
+    }
+
+    @Override
+    public void actOnVehicleRemoved() {
+        drawPanel.clearList();
+        drawPanel.repaint();
+        for (DrawableVehicle vehicle: model.drawableVehicles) {
+            addVehicle(vehicle.getPosition(), vehicle.getImageFileName());
+        }
     }
 }

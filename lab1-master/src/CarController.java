@@ -6,7 +6,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -15,13 +14,17 @@ import java.util.ArrayList;
  */
 
 public class CarController {
-    CarView frame;
-    CarModel model;
+    private final int panelWidth;
+    private final int panelHeight;
+    DrawableVehicleModel model;
+    JPanel mainPanel = new JPanel();
 
     JPanel controlPanel = new JPanel();
 
-    CarController(CarModel model){
+    CarController(DrawableVehicleModel model, int panelWidth, int panelHeight){
         this.model = model;
+        this.panelWidth = panelWidth;
+        this.panelHeight = panelHeight;
     }
 
     JPanel gasPanel = new JPanel();
@@ -35,12 +38,15 @@ public class CarController {
     JButton liftBedButton = new JButton("Scania Lift Bed");
     JButton lowerBedButton = new JButton("Scania Lower Bed");
 
+    JPanel startStopPanel = new JPanel();
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
 
     int gasAmount = 0;
 
     public void initComponents() {
+        mainPanel.setPreferredSize(new Dimension(panelWidth, panelHeight));
+        mainPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value
                         0, //min
@@ -54,11 +60,16 @@ public class CarController {
         });
 
 
-        gasPanel.setLayout(new BorderLayout());
-        gasPanel.add(gasLabel, BorderLayout.PAGE_START);
-        gasPanel.add(gasSpinner, BorderLayout.PAGE_END);
+        gasPanel.setPreferredSize(new Dimension(panelWidth / 5, panelHeight));
+        gasPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gasPanel.add(gasLabel, gbc);
+        gbc.gridy = 1;
+        gasPanel.add(gasSpinner, gbc);
 
-        frame.add(gasPanel);
+        mainPanel.add(gasPanel);
 
         controlPanel.setLayout(new GridLayout(2,4));
 
@@ -68,21 +79,26 @@ public class CarController {
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
-        controlPanel.setPreferredSize(new Dimension((800/2)+4, 200));
-        frame.add(controlPanel);
+        controlPanel.setPreferredSize(new Dimension((panelWidth * 6 / 10 - 2), panelHeight));
+        mainPanel.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
 
 
+        startStopPanel.setPreferredSize(new Dimension(panelWidth * 2 / 10, panelHeight));
+        startStopPanel.setLayout(new BorderLayout(0, 0));
+
         startButton.setBackground(Color.blue);
         startButton.setForeground(Color.green);
-        startButton.setPreferredSize(new Dimension(800/5-15,200));
-        frame.add(startButton);
-
+        startButton.setPreferredSize(new Dimension(panelWidth * 2 / 10, panelHeight / 2));
+        startStopPanel.add(startButton, BorderLayout.PAGE_START);
 
         stopButton.setBackground(Color.red);
         stopButton.setForeground(Color.black);
-        stopButton.setPreferredSize(new Dimension(800/5-15,200));
-        frame.add(stopButton);
+        stopButton.setPreferredSize(new Dimension(panelWidth * 2 / 10, panelHeight / 2));
+        startStopPanel.add(stopButton, BorderLayout.PAGE_END);
+        mainPanel.add(startStopPanel);
+
+        startStopPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 
         lowerBedButton.addActionListener(new ActionListener() {
             @Override
@@ -140,7 +156,6 @@ public class CarController {
         });
 
         // Make the frame pack all it's components by respecting the sizes if possible.
-        frame.pack();
     }
 
 

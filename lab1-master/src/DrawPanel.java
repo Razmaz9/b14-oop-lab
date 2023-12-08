@@ -32,4 +32,8 @@ public class DrawPanel extends JPanel{
     public void addVehicle(Pair<Point2D.Double, BufferedImage> pointImagePair) {
         this.pointImagePairs.add(pointImagePair);
     }
+
+    public void clearList() {
+        pointImagePairs.clear();
+    }
 }

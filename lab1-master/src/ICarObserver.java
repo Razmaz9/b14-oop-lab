@@ -2,5 +2,7 @@ package src;
 
 public interface ICarObserver {
 
-    void actOnModelChange(String reason);
+    void actOnVehicleMoved(String reason);
+    void actOnVehicleAdded();
+    void actOnVehicleRemoved();
 }
