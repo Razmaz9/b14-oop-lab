@@ -63,6 +63,7 @@ public class DrawableVehicleModel {
             carModel.vehicles.removeLast();
             drawableVehicles.removeLast();
         }
+        notifyObserversCarRemoved();
     }
 
     public void moveVehicles() {
